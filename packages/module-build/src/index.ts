@@ -46,7 +46,9 @@ export default function lumenModule(opts: LumenModuleOptions = {}): Plugin {
 
 			const entry = opts.entry
 				? resolve(projectRoot, opts.entry)
-				: resolve(projectRoot, "src/main.ts");
+				: (["src/main.tsx", "src/main.ts"]
+						.map((f) => resolve(projectRoot, f))
+						.find(existsSync) ?? resolve(projectRoot, "src/main.ts"));
 
 			const config: UserConfig = {
 				build: {

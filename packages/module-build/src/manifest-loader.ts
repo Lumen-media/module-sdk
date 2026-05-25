@@ -1,8 +1,10 @@
 import { readFileSync } from "node:fs";
 import { type ModuleManifest, manifestSchema } from "@lumen/module-sdk";
 import Ajv from "ajv";
+import addFormats from "ajv-formats";
 
 const ajv = new Ajv({ allErrors: true });
+addFormats(ajv);
 const validate = ajv.compile(manifestSchema);
 
 export class ManifestError extends Error {
