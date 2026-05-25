@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "api": "^0.1.0",
   "minLumenVersion": "0.0.0",
-  "description": "A Lumen module.",
+  "description": "__DESCRIPTION__",
+  "author": "__AUTHOR__",
   "entry": "main.js",
   "license": "MIT"
 }

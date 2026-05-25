@@ -1,0 +1,10 @@
+{
+	"id": "com.lumen.example.minimal",
+	"name": "Minimal Example",
+	"version": "0.0.0",
+	"api": "^0.1.0",
+	"minLumenVersion": "0.0.0",
+	"description": "Counter panel with persistent state — the hello world of Lumen modules.",
+	"entry": "main.js",
+	"license": "MIT"
+}

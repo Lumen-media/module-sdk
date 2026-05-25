@@ -12,6 +12,8 @@ import { fileURLToPath } from "node:url";
 export interface ScaffoldOptions {
 	cwd?: string;
 	template?: string;
+	description?: string;
+	author?: string;
 }
 
 interface Replacements {
@@ -19,6 +21,8 @@ interface Replacements {
 	__KEBAB__: string;
 	__PASCAL__: string;
 	__ID__: string;
+	__DESCRIPTION__: string;
+	__AUTHOR__: string;
 }
 
 export async function scaffoldModule(
@@ -52,6 +56,8 @@ export async function scaffoldModule(
 		__KEBAB__: kebab,
 		__PASCAL__: pascal,
 		__ID__: id,
+		__DESCRIPTION__: opts.description ?? "A Lumen module",
+		__AUTHOR__: opts.author ?? "",
 	};
 
 	copyTree(templateRoot, target, replacements);

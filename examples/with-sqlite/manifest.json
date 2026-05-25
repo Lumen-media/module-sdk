@@ -1,0 +1,10 @@
+{
+	"id": "com.lumen.example.with-sqlite",
+	"name": "With SQLite Example",
+	"version": "0.0.0",
+	"api": "^0.1.0",
+	"minLumenVersion": "0.0.0",
+	"description": "Demonstrates host.data.sqlite with migrations and a panel that reads from the DB.",
+	"entry": "main.js",
+	"license": "MIT"
+}

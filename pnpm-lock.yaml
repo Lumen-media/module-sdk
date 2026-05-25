@@ -223,6 +223,99 @@ importers:
         specifier: ^4.1.7
         version: 4.1.7(@types/node@22.19.19)(vite@8.0.14(@types/node@22.19.19)(esbuild@0.27.7))
 
+  examples/minimal:
+    dependencies:
+      '@lumen/module-sdk':
+        specifier: workspace:*
+        version: link:../../packages/module-sdk
+      react:
+        specifier: ^19.0.0
+        version: 19.2.6
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.6(react@19.2.6)
+    devDependencies:
+      '@lumen/module-build':
+        specifier: workspace:*
+        version: link:../../packages/module-build
+      '@lumen/module-cli':
+        specifier: workspace:*
+        version: link:../../packages/module-cli
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.15
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.15)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.0.0
+        version: 7.3.3(@types/node@22.19.19)(lightningcss@1.32.0)
+
+  examples/with-presenter:
+    dependencies:
+      '@lumen/module-sdk':
+        specifier: workspace:*
+        version: link:../../packages/module-sdk
+      react:
+        specifier: ^19.0.0
+        version: 19.2.6
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.6(react@19.2.6)
+    devDependencies:
+      '@lumen/module-build':
+        specifier: workspace:*
+        version: link:../../packages/module-build
+      '@lumen/module-cli':
+        specifier: workspace:*
+        version: link:../../packages/module-cli
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.15
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.15)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.0.0
+        version: 7.3.3(@types/node@22.19.19)(lightningcss@1.32.0)
+
+  examples/with-sqlite:
+    dependencies:
+      '@lumen/module-sdk':
+        specifier: workspace:*
+        version: link:../../packages/module-sdk
+      react:
+        specifier: ^19.0.0
+        version: 19.2.6
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.6(react@19.2.6)
+    devDependencies:
+      '@lumen/module-build':
+        specifier: workspace:*
+        version: link:../../packages/module-build
+      '@lumen/module-cli':
+        specifier: workspace:*
+        version: link:../../packages/module-cli
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.15
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.15)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.0.0
+        version: 7.3.3(@types/node@22.19.19)(lightningcss@1.32.0)
+
   packages/create-module:
     devDependencies:
       '@types/node':

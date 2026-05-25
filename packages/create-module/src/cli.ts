@@ -1,5 +1,16 @@
-import { argv, exit } from "node:process";
+import { argv, exit, stdin, stdout } from "node:process";
+import { createInterface } from "node:readline/promises";
 import { scaffoldModule } from "./index.js";
+
+async function ask(
+	rl: ReturnType<typeof createInterface>,
+	question: string,
+	fallback = "",
+): Promise<string> {
+	const label = fallback ? `${question} (${fallback}): ` : `${question}: `;
+	const answer = (await rl.question(label)).trim();
+	return answer || fallback;
+}
 
 async function main(): Promise<number> {
 	const name = argv[2];
@@ -10,9 +21,16 @@ async function main(): Promise<number> {
 		return name ? 0 : 1;
 	}
 
+	const rl = createInterface({ input: stdin, output: stdout });
+
+	const description = await ask(rl, "Description", "A Lumen module");
+	const author = await ask(rl, "Author");
+
+	rl.close();
+
 	try {
-		const target = await scaffoldModule(name);
-		console.log(`Created ${target}`);
+		const target = await scaffoldModule(name, { description, author });
+		console.log(`\nCreated ${target}`);
 		console.log("");
 		console.log("Next steps:");
 		console.log(`  cd ${name}`);

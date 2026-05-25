@@ -1,0 +1,10 @@
+{
+	"id": "com.lumen.example.with-presenter",
+	"name": "With Presenter Example",
+	"version": "0.0.0",
+	"api": "^0.1.0",
+	"minLumenVersion": "0.0.0",
+	"description": "Demonstrates cross-window communication via host.bus and host.presentation.",
+	"entry": "main.js",
+	"license": "MIT"
+}

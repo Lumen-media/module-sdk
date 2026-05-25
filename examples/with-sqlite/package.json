@@ -1,0 +1,23 @@
+{
+	"name": "@lumen/example-with-sqlite",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "lumen-module build",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@lumen/module-sdk": "workspace:*",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	},
+	"devDependencies": {
+		"@lumen/module-build": "workspace:*",
+		"@lumen/module-cli": "workspace:*",
+		"@types/react": "^19.0.0",
+		"@types/react-dom": "^19.0.0",
+		"typescript": "^5.9.3",
+		"vite": "^7.0.0"
+	}
+}
