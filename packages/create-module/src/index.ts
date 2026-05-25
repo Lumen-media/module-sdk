@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 export interface ScaffoldOptions {
 	cwd?: string;
 	template?: string;
+	templateDir?: string;
 	description?: string;
 	author?: string;
 }
@@ -45,7 +46,7 @@ export async function scaffoldModule(
 		throw new Error(`Directory already exists: ${target}`);
 	}
 
-	const here = dirname(fileURLToPath(import.meta.url));
+	const here = opts.templateDir ?? dirname(fileURLToPath(import.meta.url));
 	const templateRoot = resolve(here, "templates", templateName);
 	if (!existsSync(templateRoot)) {
 		throw new Error(`Template not found: ${templateName}`);
