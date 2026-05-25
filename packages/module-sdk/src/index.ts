@@ -130,13 +130,32 @@ export interface LoggerAPI {
 }
 
 export type LyricsHostAPI = Record<string, never>;
-export type QueueHostAPI = Record<string, never>;
 export type LibraryHostAPI = Record<string, never>;
 export type PlayerHostAPI = Record<string, never>;
-export type ThemesHostAPI = Record<string, never>;
+
+export interface ThemesHostAPI {
+	current(): string;
+	onChange(handler: (theme: string) => void): Disposable;
+}
+
+export interface QueueItem {
+	id: string;
+	title: string;
+}
+
+export interface QueueState {
+	items: QueueItem[];
+	currentIndex: number | null;
+}
+
+export interface QueueHostAPI {
+	state(): QueueState;
+	onChange(handler: (state: QueueState) => void): Disposable;
+}
 
 export interface PresentationHostAPI {
 	state(): "idle" | "live";
+	onStateChange(handler: (state: "idle" | "live") => void): Disposable;
 	project(viewId: string, props?: unknown): void;
 	clear(): void;
 	isWindowOpen(): boolean;
