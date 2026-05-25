@@ -7,5 +7,11 @@ export default defineConfig({
 	sourcemap: true,
 	clean: true,
 	banner: { js: "#!/usr/bin/env node" },
-	external: ["@lumen/module-build", "@lumen/module-sdk", "archiver", "vite"],
+	external: [
+		"@lumen/create-module",
+		"@lumen/module-build",
+		"@lumen/module-sdk",
+		"archiver",
+		"vite",
+	],
 });

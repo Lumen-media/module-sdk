@@ -15,6 +15,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@lumen/create-module": "workspace:*",
 		"@lumen/module-build": "workspace:*",
 		"@lumen/module-sdk": "workspace:*",
 		"archiver": "^7.0.1"

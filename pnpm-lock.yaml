@@ -223,6 +223,12 @@ importers:
         specifier: ^4.1.7
         version: 4.1.7(@types/node@22.19.19)(vite@8.0.14(@types/node@22.19.19)(esbuild@0.27.7))
 
+  packages/create-module:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.19.19
+
   packages/module-build:
     dependencies:
       '@lumen/module-sdk':
@@ -241,6 +247,9 @@ importers:
 
   packages/module-cli:
     dependencies:
+      '@lumen/create-module':
+        specifier: workspace:*
+        version: link:../create-module
       '@lumen/module-build':
         specifier: workspace:*
         version: link:../module-build
