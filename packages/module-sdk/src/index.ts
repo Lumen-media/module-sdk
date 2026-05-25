@@ -1,7 +1,16 @@
 import type { ComponentType } from "react";
+import manifestSchema from "./manifest.schema.json";
+
+export { manifestSchema };
 
 export interface Disposable {
 	dispose(): void;
+}
+
+export interface ModuleManifestAuthor {
+	name: string;
+	url?: string;
+	email?: string;
 }
 
 export interface ModuleManifest {
@@ -11,12 +20,13 @@ export interface ModuleManifest {
 	api: string;
 	minLumenVersion: string;
 	description?: string;
-	author?: { name: string; url?: string };
+	author?: string | ModuleManifestAuthor;
 	entry?: string;
 	icon?: string;
 	homepage?: string;
 	repository?: string;
 	license?: string;
+	keywords?: string[];
 }
 
 export type LumenWindow = "main" | "presenter";

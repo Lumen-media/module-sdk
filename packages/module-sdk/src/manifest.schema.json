@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lumen.dev/schemas/module-manifest.json",
+  "title": "Lumen Module Manifest",
+  "description": "Metadata for a Lumen module, validated at build, install, and load time.",
+  "type": "object",
+  "required": ["id", "name", "version", "api", "minLumenVersion"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "description": "Reverse-DNS, globally unique. Used as the data directory name, CSS class namespace, and command id prefix."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable name shown in UI and store listings."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[A-Za-z0-9-.]+)?(\\+[A-Za-z0-9-.]+)?$",
+      "description": "Module version in semver."
+    },
+    "api": {
+      "type": "string",
+      "description": "Semver range against the @lumen/module-sdk version this module targets."
+    },
+    "minLumenVersion": {
+      "type": "string",
+      "description": "Minimum Lumen app version that can load this module."
+    },
+    "description": { "type": "string" },
+    "author": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "required": ["name"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string" },
+            "url": { "type": "string", "format": "uri" },
+            "email": { "type": "string", "format": "email" }
+          }
+        }
+      ]
+    },
+    "entry": {
+      "type": "string",
+      "default": "main.js",
+      "description": "Relative path to the bundled JS entry. Defaults to main.js."
+    },
+    "icon": { "type": "string" },
+    "homepage": { "type": "string", "format": "uri" },
+    "repository": { "type": "string" },
+    "license": { "type": "string" },
+    "keywords": { "type": "array", "items": { "type": "string" } }
+  }
+}
