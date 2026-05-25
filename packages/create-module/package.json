@@ -15,7 +15,10 @@
 			"import": "./dist/index.js"
 		}
 	},
-	"files": ["dist", "dist/templates"],
+	"files": [
+		"dist",
+		"dist/templates"
+	],
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
@@ -30,5 +33,11 @@
 		"url": "https://github.com/Lumen-media/module-sdk.git",
 		"directory": "packages/create-module"
 	},
-	"keywords": ["lumen", "module", "create", "scaffolder", "sdk"]
+	"keywords": [
+		"lumen",
+		"module",
+		"create",
+		"scaffolder",
+		"sdk"
+	]
 }
