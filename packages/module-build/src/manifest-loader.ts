@@ -37,5 +37,5 @@ export function loadAndValidateManifest(path: string): ModuleManifest {
 		);
 	}
 
-	return raw as ModuleManifest;
+	return raw as unknown as ModuleManifest;
 }

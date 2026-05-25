@@ -1,34 +1,29 @@
 {
-	"name": "@lumen/module-build",
+	"name": "@lumen/module-cli",
 	"version": "0.0.0",
-	"description": "Vite plugin for building Lumen modules",
+	"description": "Command-line tool for building Lumen modules",
 	"type": "module",
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js"
-		}
+	"bin": {
+		"lumen-module": "./dist/lumen-module.js"
 	},
 	"files": [
 		"dist"
 	],
-	"sideEffects": false,
 	"scripts": {
 		"build": "tsup",
 		"dev": "tsup --watch",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@lumen/module-build": "workspace:*",
 		"@lumen/module-sdk": "workspace:*",
-		"ajv": "^8.17.1"
+		"archiver": "^7.0.1"
 	},
 	"peerDependencies": {
 		"vite": ">=5"
 	},
 	"devDependencies": {
+		"@types/archiver": "^6.0.3",
 		"@types/node": "^22.10.0",
 		"vite": "^7.0.0"
 	},
@@ -36,12 +31,12 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Lumen-media/module-sdk.git",
-		"directory": "packages/module-build"
+		"directory": "packages/module-cli"
 	},
 	"keywords": [
 		"lumen",
 		"module",
-		"vite-plugin",
+		"cli",
 		"sdk"
 	]
 }

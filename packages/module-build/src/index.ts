@@ -11,6 +11,9 @@ import type { Plugin, UserConfig } from "vite";
 import { warnUnnamespacedCss } from "./css-lint.js";
 import { loadAndValidateManifest } from "./manifest-loader.js";
 
+export { expectedNamespace, warnUnnamespacedCss } from "./css-lint.js";
+export { loadAndValidateManifest, ManifestError } from "./manifest-loader.js";
+
 export interface LumenModuleOptions {
 	manifest?: string;
 	entry?: string;
@@ -18,12 +21,7 @@ export interface LumenModuleOptions {
 	assets?: string;
 }
 
-const HOST_EXTERNALS = [
-	"react",
-	"react-dom",
-	"@lumen/ui",
-	"@lumen/module-sdk",
-];
+const HOST_EXTERNALS = ["react", "react-dom", "@lumen/ui", "@lumen/module-sdk"];
 
 function isHostExternal(id: string): boolean {
 	if (HOST_EXTERNALS.includes(id)) return true;
