@@ -25,7 +25,7 @@ export async function scaffoldModule(
 	name: string,
 	opts: ScaffoldOptions = {},
 ): Promise<string> {
-	if (!name || !name.trim()) {
+	if (!name?.trim()) {
 		throw new Error("Module name is required.");
 	}
 
@@ -59,11 +59,7 @@ export async function scaffoldModule(
 	return target;
 }
 
-function copyTree(
-	src: string,
-	dst: string,
-	replacements: Replacements,
-): void {
+function copyTree(src: string, dst: string, replacements: Replacements): void {
 	mkdirSync(dst, { recursive: true });
 	for (const entry of readdirSync(src)) {
 		const srcPath = join(src, entry);

@@ -9,9 +9,9 @@ export function warnUnnamespacedCss(css: string, moduleId: string): void {
 	const ruleHead = /(^|\})\s*([^{}@][^{}]*)\{/g;
 
 	let warned = 0;
-	let match: RegExpExecArray | null;
+	let match = ruleHead.exec(css);
 
-	while ((match = ruleHead.exec(css)) !== null) {
+	while (match !== null) {
 		const head = match[2];
 		if (!head) continue;
 		const selectors = head
@@ -31,6 +31,7 @@ export function warnUnnamespacedCss(css: string, moduleId: string): void {
 				);
 			}
 		}
+		match = ruleHead.exec(css);
 	}
 
 	if (warned > MAX_WARNINGS) {
