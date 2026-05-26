@@ -55,11 +55,21 @@ export interface PanelsAPI {
 	add(spec: PanelSpec): Disposable;
 }
 
+export interface CommanderAppProps {
+	onClose: () => void;
+	onBack: () => void;
+}
+
 export interface CommandSpec {
 	id: string;
 	title: string;
+	subtitle?: string;
+	icon?: ComponentType<{ className?: string }>;
 	keybinding?: string;
-	run: (args?: unknown) => unknown;
+	keywords?: string[];
+	type?: 'action' | 'app';
+	run?: (args?: unknown) => unknown;
+	component?: ComponentType<CommanderAppProps>;
 }
 
 export interface CommandsAPI {
