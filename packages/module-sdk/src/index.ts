@@ -72,9 +72,27 @@ export interface CommandSpec {
 	component?: ComponentType<CommanderAppProps>;
 }
 
+export interface PrefixResult {
+	id: string;
+	title: string;
+	subtitle?: string;
+	badge?: string;
+	run?: () => void;
+	component?: ComponentType<CommanderAppProps>;
+}
+
+export interface PrefixSpec {
+	prefix: string;
+	title: string;
+	icon?: ComponentType<{ className?: string }>;
+	placeholder?: string;
+	handle(query: string): PrefixResult[] | Promise<PrefixResult[]>;
+}
+
 export interface CommandsAPI {
 	add(spec: CommandSpec): Disposable;
 	invoke(id: string, args?: unknown): unknown;
+	addPrefix(spec: PrefixSpec): Disposable;
 }
 
 export interface NotifyOpts {
