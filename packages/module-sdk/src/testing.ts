@@ -9,7 +9,8 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 		window: "main",
 		app: { version: "0.0.0", locale: "en" },
 		panels: { add: () => disposable },
-		commands: { add: () => disposable, invoke: () => undefined },
+		commands: { add: () => disposable, invoke: () => undefined, addPrefix: () => disposable },
+		menus: { register: () => disposable, addItem: () => disposable },
 		ui: {
 			notify: noop,
 			confirm: () => Promise.resolve(true),
