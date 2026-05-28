@@ -1,5 +1,5 @@
 {
-	"name": "@lumen/module-cli",
+	"name": "@lumen-media/module-cli",
 	"version": "0.0.0",
 	"description": "Command-line tool for building Lumen modules",
 	"type": "module",
@@ -15,9 +15,9 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@lumen/create-module": "workspace:*",
-		"@lumen/module-build": "workspace:*",
-		"@lumen/module-sdk": "workspace:*",
+		"@lumen-media/create-module": "workspace:*",
+		"@lumen-media/module-build": "workspace:*",
+		"@lumen-media/module-sdk": "workspace:*",
 		"archiver": "^7.0.1"
 	},
 	"peerDependencies": {

@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { type ModuleManifest, manifestSchema } from "@lumen/module-sdk";
+import { type ModuleManifest, manifestSchema } from "@lumen-media/module-sdk";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 

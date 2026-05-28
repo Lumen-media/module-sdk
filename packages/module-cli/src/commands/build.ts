@@ -11,7 +11,7 @@ export async function runBuild(_args: string[]): Promise<number> {
 	if (hasUserConfig) {
 		await build({ root: cwd });
 	} else {
-		const { default: lumenModule } = await import("@lumen/module-build");
+		const { default: lumenModule } = await import("@lumen-media/module-build");
 		await build({
 			root: cwd,
 			configFile: false,

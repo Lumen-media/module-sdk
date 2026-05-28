@@ -6,7 +6,7 @@ export async function runInit(args: string[]): Promise<number> {
 	}
 
 	try {
-		const { scaffoldModule } = await import("@lumen/create-module");
+		const { scaffoldModule } = await import("@lumen-media/create-module");
 		const target = await scaffoldModule(name);
 		console.log(`Created ${target}`);
 		console.log("");

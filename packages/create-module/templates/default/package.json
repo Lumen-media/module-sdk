@@ -13,9 +13,9 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@lumen/module-build": "^0.1.0",
-    "@lumen/module-cli": "^0.1.0",
-    "@lumen/module-sdk": "^0.1.0",
+    "@lumen-media/module-build": "^0.1.0",
+    "@lumen-media/module-cli": "^0.1.0",
+    "@lumen-media/module-sdk": "^0.1.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "typescript": "^5.7.2",

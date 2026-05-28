@@ -13,7 +13,7 @@ Usage:
 
 Commands:
   init <name>           Scaffold a new module from the starter template
-  build                 Build the module via Vite + @lumen/module-build
+  build                 Build the module via Vite + @lumen-media/module-build
   pack                  Build, then zip dist/ into {id}-{version}.lumenpack
   validate [path]       Validate the manifest at path (default: manifest.json)
   dev [path]            Watch a module folder and hot-reload in a running Lumen

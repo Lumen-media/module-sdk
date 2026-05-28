@@ -24,7 +24,7 @@
 		},
 		"api": {
 			"type": "string",
-			"description": "Semver range against the @lumen/module-sdk version this module targets."
+			"description": "Semver range against the @lumen-media/module-sdk version this module targets."
 		},
 		"minLumenVersion": {
 			"type": "string",

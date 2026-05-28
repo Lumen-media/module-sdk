@@ -7,5 +7,5 @@ export default defineConfig({
 	sourcemap: true,
 	clean: true,
 	treeshake: true,
-	external: ["vite", "@lumen/module-sdk"],
+	external: ["vite", "@lumen-media/module-sdk"],
 });

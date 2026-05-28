@@ -1,4 +1,4 @@
-import { type LumenHost, LumenPlugin } from "@lumen/module-sdk";
+import { type LumenHost, LumenPlugin } from "@lumen-media/module-sdk";
 
 export default class __PASCAL__Plugin extends LumenPlugin {
 	async onload(host: LumenHost): Promise<void> {

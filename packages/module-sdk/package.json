@@ -1,5 +1,5 @@
 {
-	"name": "@lumen/module-sdk",
+	"name": "@lumen-media/module-sdk",
 	"version": "0.0.0",
 	"description": "Public contract for building Lumen modules",
 	"type": "module",

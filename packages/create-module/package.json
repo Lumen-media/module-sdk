@@ -1,5 +1,5 @@
 {
-	"name": "@lumen/create-module",
+	"name": "@lumen-media/create-module",
 	"version": "0.0.0",
 	"description": "Scaffolder for new Lumen modules",
 	"type": "module",

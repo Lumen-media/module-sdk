@@ -1,5 +1,5 @@
-import { type LumenHost, LumenPlugin } from "@lumen/module-sdk";
-import { LumenHostProvider, useHost } from "@lumen/module-sdk/hooks";
+import { type LumenHost, LumenPlugin } from "@lumen-media/module-sdk";
+import { LumenHostProvider, useHost } from "@lumen-media/module-sdk/hooks";
 import { useState } from "react";
 
 function CounterPanel() {

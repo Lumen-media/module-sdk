@@ -2,8 +2,8 @@ import {
 	type LumenHost,
 	LumenPlugin,
 	type SqliteHandle,
-} from "@lumen/module-sdk";
-import { LumenHostProvider, useHost } from "@lumen/module-sdk/hooks";
+} from "@lumen-media/module-sdk";
+import { LumenHostProvider, useHost } from "@lumen-media/module-sdk/hooks";
 import { useEffect, useState } from "react";
 
 interface Item {

@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
 
 export async function runValidate(args: string[]): Promise<number> {
-	const { loadAndValidateManifest } = await import("@lumen/module-build");
+	const { loadAndValidateManifest } = await import("@lumen-media/module-build");
 	const target = args[0] ?? "manifest.json";
 	const path = resolve(process.cwd(), target);
 
