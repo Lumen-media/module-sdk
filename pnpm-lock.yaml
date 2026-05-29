@@ -343,6 +343,10 @@ importers:
 
   packages/module-cli:
     dependencies:
+      archiver:
+        specifier: ^7.0.1
+        version: 7.0.1
+    devDependencies:
       '@lumen-media/create-module':
         specifier: workspace:*
         version: link:../create-module
@@ -352,10 +356,6 @@ importers:
       '@lumen-media/module-sdk':
         specifier: workspace:*
         version: link:../module-sdk
-      archiver:
-        specifier: ^7.0.1
-        version: 7.0.1
-    devDependencies:
       '@types/archiver':
         specifier: ^6.0.3
         version: 6.0.4
