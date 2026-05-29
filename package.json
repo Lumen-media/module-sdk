@@ -1,6 +1,6 @@
 {
 	"name": "module-sdk",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"private": true,
 	"description": "Lumen module SDK monorepo",
 	"type": "module",
