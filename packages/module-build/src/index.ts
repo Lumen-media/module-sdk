@@ -66,7 +66,10 @@ export default function lumenModule(opts: LumenModuleOptions = {}): Plugin {
 					minify: false,
 				},
 				esbuild: {
-					jsx: "automatic",
+					jsx: "transform",
+					jsxFactory: "React.createElement",
+					jsxFragment: "React.Fragment",
+					jsxInject: "import React from 'react'",
 				},
 			};
 
