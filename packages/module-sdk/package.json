@@ -18,6 +18,10 @@
 		"./hooks": {
 			"types": "./dist/hooks.d.ts",
 			"import": "./dist/hooks.js"
+		},
+		"./ui": {
+			"types": "./dist/ui.d.ts",
+			"import": "./dist/ui.js"
 		}
 	},
 	"files": [
