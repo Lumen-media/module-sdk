@@ -235,10 +235,10 @@ importers:
         specifier: ^19.0.0
         version: 19.2.6(react@19.2.6)
     devDependencies:
-      '@lumen/module-build':
+      '@lumen-media/module-build':
         specifier: workspace:*
         version: link:../../packages/module-build
-      '@lumen/module-cli':
+      '@lumen-media/module-cli':
         specifier: workspace:*
         version: link:../../packages/module-cli
       '@types/react':
@@ -266,10 +266,10 @@ importers:
         specifier: ^19.0.0
         version: 19.2.6(react@19.2.6)
     devDependencies:
-      '@lumen/module-build':
+      '@lumen-media/module-build':
         specifier: workspace:*
         version: link:../../packages/module-build
-      '@lumen/module-cli':
+      '@lumen-media/module-cli':
         specifier: workspace:*
         version: link:../../packages/module-cli
       '@types/react':
@@ -297,10 +297,10 @@ importers:
         specifier: ^19.0.0
         version: 19.2.6(react@19.2.6)
     devDependencies:
-      '@lumen/module-build':
+      '@lumen-media/module-build':
         specifier: workspace:*
         version: link:../../packages/module-build
-      '@lumen/module-cli':
+      '@lumen-media/module-cli':
         specifier: workspace:*
         version: link:../../packages/module-cli
       '@types/react':
@@ -343,10 +343,10 @@ importers:
 
   packages/module-cli:
     dependencies:
-      '@lumen/create-module':
+      '@lumen-media/create-module':
         specifier: workspace:*
         version: link:../create-module
-      '@lumen/module-build':
+      '@lumen-media/module-build':
         specifier: workspace:*
         version: link:../module-build
       '@lumen-media/module-sdk':
