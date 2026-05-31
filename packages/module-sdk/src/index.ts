@@ -32,13 +32,12 @@ export interface ModuleManifest {
 export type LumenWindow = "main" | "presenter";
 
 export type SlotName =
-	| "sidebar.left.tabs"
+ "sidebar.left.tabs"
 	| "sidebar.right.tabs"
 	| "main.center"
 	| "dialog"
 	| "presenter.content"
-	| "presenter.overlay"
-	| "settings.section"
+		| "settings.section"
 	| "command-palette.section"
 	| "editor.lyrics.toolbar";
 
@@ -214,7 +213,6 @@ export interface QueueHostAPI {
 	state(): QueueState;
 	onChange(handler: (state: QueueState) => void): Disposable;
 }
-
 export interface PresentationHostAPI {
 	state(): "idle" | "live";
 	onStateChange(handler: (state: "idle" | "live") => void): Disposable;
