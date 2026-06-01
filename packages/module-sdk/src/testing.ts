@@ -53,6 +53,9 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 			current: () => "dark",
 			onChange: () => disposable,
 		},
+		fonts: {
+			list: () => Promise.resolve([]),
+		},
 		log: {
 			debug: noop,
 			info: noop,
