@@ -161,16 +161,34 @@ export interface ToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export interface KbdProps extends React.HTMLAttributes<HTMLElement> {}
 export interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
 
-export interface ComboboxOption {
-	value: string;
-	label: string;
-}
 export interface ComboboxProps {
-	value: string;
-	options: ComboboxOption[];
-	onChange: (value: string) => void;
-	className?: string;
+	value?: string;
+	defaultValue?: string;
+	onValueChange?: (value: string) => void;
+	inputValue?: string;
+	onInputValueChange?: (value: string) => void;
+	children?: React.ReactNode;
 }
+export interface ComboboxInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+	showTrigger?: boolean;
+	showClear?: boolean;
+}
+export interface ComboboxContentProps extends React.HTMLAttributes<HTMLDivElement> {
+	side?: "top" | "right" | "bottom" | "left";
+	sideOffset?: number;
+	align?: "start" | "center" | "end";
+	alignOffset?: number;
+}
+export interface ComboboxListProps extends React.HTMLAttributes<HTMLUListElement> {}
+export interface ComboboxItemProps extends React.HTMLAttributes<HTMLLIElement> {
+	value: string;
+	disabled?: boolean;
+}
+export interface ComboboxGroupProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ComboboxLabelProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ComboboxCollectionProps { children?: React.ReactNode }
+export interface ComboboxEmptyProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ComboboxSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export interface AlertDialogRootProps {
 	open?: boolean;
@@ -373,7 +391,17 @@ export const Toggle = _stub as AnyComp<ToggleProps>;
 export const toggleVariants = _stub as unknown;
 export const Kbd = _stub as AnyComp<KbdProps>;
 export const KbdGroup = _stub as AnyComp<KbdGroupProps>;
-export const Combobox = _stub as AnyComp<ComboboxProps>;
+export const Combobox = _stub as AnyComp<ComboboxProps> & {
+	ComboboxInput: AnyComp<ComboboxInputProps>;
+	ComboboxContent: AnyComp<ComboboxContentProps>;
+	ComboboxList: AnyComp<ComboboxListProps>;
+	ComboboxItem: AnyComp<ComboboxItemProps>;
+	ComboboxGroup: AnyComp<ComboboxGroupProps>;
+	ComboboxLabel: AnyComp<ComboboxLabelProps>;
+	ComboboxCollection: AnyComp<ComboboxCollectionProps>;
+	ComboboxEmpty: AnyComp<ComboboxEmptyProps>;
+	ComboboxSeparator: AnyComp<ComboboxSeparatorProps>;
+};
 
 export const AlertDialog = _stub as AnyComp<AlertDialogRootProps> & {
 	AlertDialogAction: AnyComp<AlertDialogActionProps>;
