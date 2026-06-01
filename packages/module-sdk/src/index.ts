@@ -213,6 +213,10 @@ export interface QueueHostAPI {
 	state(): QueueState;
 	onChange(handler: (state: QueueState) => void): Disposable;
 }
+export interface FontsAPI {
+	list(): Promise<string[]>;
+}
+
 export interface PresentationHostAPI {
 	state(): "idle" | "live";
 	onStateChange(handler: (state: "idle" | "live") => void): Disposable;
@@ -243,6 +247,7 @@ export interface LumenHost {
 	player: PlayerHostAPI;
 	presentation: PresentationHostAPI;
 	themes: ThemesHostAPI;
+	fonts: FontsAPI;
 
 	log: LoggerAPI;
 }

@@ -201,7 +201,12 @@ export interface PopoverRootProps {
 export interface PopoverTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {
+	align?: "start" | "center" | "end";
+	alignOffset?: number;
+	side?: "top" | "right" | "bottom" | "left";
+	sideOffset?: number;
+}
 export interface PopoverHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 export interface PopoverTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
 export interface PopoverDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
