@@ -1,31 +1,63 @@
-# @lumen/module-cli
+# @lumen-media/module-cli
 
 Command-line tool for building [Lumen](https://github.com/Lumen-media/lumen) modules.
 
-> Pre-1.0. `build` / `pack` / `validate` are functional. `dev` and `init` ship in upcoming releases.
+## Scaffold a new module
 
-## Install
+No install needed — use `npx`:
 
 ```bash
-pnpm add -D @lumen/module-cli vite
+npx @lumen-media/module-cli init my-module
+cd my-module
+pnpm install
+pnpm build
 ```
 
-The CLI installs `@lumen/module-build` automatically (as a runtime dependency). You still need `vite` in your project as a peer.
+This generates a ready-to-use module with `vite.config.ts`, TypeScript, React, and all scripts pre-configured.
 
 ## Commands
 
 ```
-lumen-module init <name>           Scaffold a new module
-lumen-module build                 Build via Vite + @lumen/module-build
-lumen-module pack                  Build, then zip dist/ into a .lumenpack
-lumen-module validate [path]       Validate manifest.json (default ./manifest.json)
-lumen-module dev [path]            Hot-reload against a running Lumen (planned)
-lumen-module publish               Open a PR to community-modules (planned)
+lumen-module init <name>       Scaffold a new module from the starter template
+lumen-module build             Build the module via Vite
+lumen-module pack              Build, then zip dist/ into {id}-{version}.lumenpack
+lumen-module validate [path]   Validate manifest.json (default: ./manifest.json)
 ```
 
-### Default Vite configuration
+## Scripts included in the generated module
 
-When `build` (or `pack`) is invoked and no `vite.config.{ts,js,mjs}` exists in the project root, the CLI applies `@lumen/module-build` automatically. Authors with custom Vite needs can drop a `vite.config.ts` of their own — the CLI defers to it.
+| Script | Description |
+|---|---|
+| `pnpm build` | Compiles the module to `dist/` |
+| `pnpm pack` | Builds and packages into a `.lumenpack` file |
+| `pnpm sync-manifest` | Syncs `version` and `description` from `package.json` to `manifest.json` |
+| `pnpm version patch\|minor\|major` | Bumps version and auto-updates `manifest.json` |
+
+## Adding Tailwind CSS
+
+```bash
+pnpm add -D tailwindcss @tailwindcss/postcss
+```
+
+Then add to `vite.config.ts`:
+
+```ts
+import tailwindcss from "@tailwindcss/postcss";
+
+export default defineConfig({
+  css: { postcss: { plugins: [tailwindcss()] } },
+  // ...
+});
+```
+
+Create `src/styles.css`:
+
+```css
+@import "tailwindcss/utilities";
+@source "./**/*.tsx";
+```
+
+Import it in `src/main.ts` as inline CSS and inject on load.
 
 ## License
 
