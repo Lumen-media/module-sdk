@@ -4,6 +4,7 @@ import {
 	existsSync,
 	mkdirSync,
 	readFileSync,
+	writeFileSync,
 } from "node:fs";
 import { resolve } from "node:path";
 import type { ModuleManifest } from "@lumen-media/module-sdk";
@@ -83,7 +84,17 @@ export default function lumenModule(opts: LumenModuleOptions = {}): Plugin {
 		closeBundle() {
 			mkdirSync(outDir, { recursive: true });
 
-			copyFileSync(resolvedManifestPath, resolve(outDir, "manifest.json"));
+			const pkgPath = resolve(projectRoot, "package.json");
+			const pkg = existsSync(pkgPath)
+				? (JSON.parse(readFileSync(pkgPath, "utf8")) as { version?: string; description?: string })
+				: {};
+
+			const outManifest = {
+				...manifest,
+				...(pkg.version ? { version: pkg.version } : {}),
+				...(pkg.description ? { description: pkg.description } : {}),
+			};
+			writeFileSync(resolve(outDir, "manifest.json"), JSON.stringify(outManifest, null, 2));
 
 			const stylesPath = opts.styles
 				? resolve(projectRoot, opts.styles)

@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "lumen-module build",
-    "pack": "lumen-module pack",
+    "pack": "lumen-module build && lumen-module pack",
+    "sync-manifest": "node scripts/sync-manifest.js",
+    "version": "pnpm run sync-manifest && git add manifest.json",
     "validate": "lumen-module validate"
   },
   "dependencies": {
