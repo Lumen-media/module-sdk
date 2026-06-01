@@ -1,6 +1,6 @@
 {
 	"name": "@lumen-media/module-build",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"private": true,
 	"description": "Vite plugin for building Lumen modules",
 	"type": "module",
