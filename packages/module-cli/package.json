@@ -1,6 +1,6 @@
 {
   "name": "@lumen-media/module-cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Command-line tool for building Lumen modules",
   "type": "module",
   "bin": {
