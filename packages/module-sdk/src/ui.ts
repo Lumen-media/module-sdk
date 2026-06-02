@@ -161,6 +161,40 @@ export interface ToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export interface KbdProps extends React.HTMLAttributes<HTMLElement> {}
 export interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
 
+export interface ToggleGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+	variant?: "default" | "secondary" | "outline";
+	size?: "default" | "sm" | "lg";
+	spacing?: number;
+	orientation?: "horizontal" | "vertical";
+	value?: string[];
+	defaultValue?: string[];
+	onValueChange?: (value: string[]) => void;
+	children?: React.ReactNode;
+}
+export interface ToggleGroupItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	variant?: "default" | "secondary" | "outline";
+	size?: "default" | "sm" | "lg";
+	value: string;
+}
+
+export interface HoverCardRootProps {
+	open?: boolean;
+	defaultOpen?: boolean;
+	onOpenChange?: (open: boolean) => void;
+	openDelay?: number;
+	closeDelay?: number;
+	children?: React.ReactNode;
+}
+export interface HoverCardTriggerProps extends React.HTMLAttributes<HTMLElement> {
+	render?: React.ReactElement;
+}
+export interface HoverCardContentProps extends React.HTMLAttributes<HTMLDivElement> {
+	side?: "top" | "right" | "bottom" | "left";
+	sideOffset?: number;
+	align?: "start" | "center" | "end";
+	alignOffset?: number;
+}
+
 export interface ComboboxProps {
 	value?: string;
 	defaultValue?: string;
@@ -388,6 +422,13 @@ export const Slider = _stub as AnyComp<SliderProps>;
 export const Checkbox = _stub as AnyComp<CheckboxProps>;
 export const Progress = _stub as AnyComp<ProgressProps>;
 export const Toggle = _stub as AnyComp<ToggleProps>;
+export const ToggleGroup = _stub as AnyComp<ToggleGroupProps> & {
+	ToggleGroupItem: AnyComp<ToggleGroupItemProps>;
+};
+export const HoverCard = _stub as AnyComp<HoverCardRootProps> & {
+	HoverCardTrigger: AnyComp<HoverCardTriggerProps>;
+	HoverCardContent: AnyComp<HoverCardContentProps>;
+};
 export const toggleVariants = _stub as unknown;
 export const Kbd = _stub as AnyComp<KbdProps>;
 export const KbdGroup = _stub as AnyComp<KbdGroupProps>;
