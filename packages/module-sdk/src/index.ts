@@ -112,12 +112,19 @@ export interface PromptOpts {
 	initial?: string;
 }
 
+export interface SelectedBackground {
+	type: "theme" | "image" | "video";
+	src: string;
+	name: string;
+}
+
 export interface UIAPI {
 	notify(opts: NotifyOpts): void;
 	confirm(opts: ConfirmOpts): Promise<boolean>;
 	prompt(opts: PromptOpts): Promise<string | null>;
 	openCommandPalette(prefilter?: string): void;
 	openDialog(panelId: string): void;
+	openBackgroundPicker(onSelect: (bg: SelectedBackground) => void): void;
 }
 
 export interface MenuItemSeparator {

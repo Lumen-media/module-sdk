@@ -17,6 +17,7 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 			prompt: () => Promise.resolve(null),
 			openCommandPalette: noop,
 			openDialog: noop,
+			openBackgroundPicker: noop,
 		},
 		bus: { emit: noop, on: () => disposable },
 		events: { emit: noop, on: () => disposable },
