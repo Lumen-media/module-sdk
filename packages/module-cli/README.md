@@ -9,11 +9,11 @@ No install needed — use `npx`:
 ```bash
 npx @lumen-media/module-cli init my-module
 cd my-module
-pnpm install
-pnpm build
+npm install
+npm run build
 ```
 
-This generates a ready-to-use module with `vite.config.ts`, TypeScript, React, and all scripts pre-configured.
+This generates a ready-to-use module with `vite.config.ts`, TypeScript, React, CI workflow, and all scripts pre-configured.
 
 ## Commands
 
@@ -28,15 +28,24 @@ lumen-module validate [path]   Validate manifest.json (default: ./manifest.json)
 
 | Script | Description |
 |---|---|
-| `pnpm build` | Compiles the module to `dist/` |
-| `pnpm pack` | Builds and packages into a `.lumenpack` file |
-| `pnpm sync-manifest` | Syncs `version` and `description` from `package.json` to `manifest.json` |
-| `pnpm version patch\|minor\|major` | Bumps version and auto-updates `manifest.json` |
+| `npm run build` | Compiles the module to `dist/` |
+| `npm run pack` | Builds and packages into a `.lumenpack` file |
+| `npm run sync-manifest` | Syncs `version` and `description` from `package.json` to `manifest.json` |
+| `npm version patch\|minor\|major` | Bumps version and auto-updates `manifest.json` |
+
+## Releases (CI)
+
+The generated module includes a GitHub Actions workflow at `.github/workflows/release.yml`. To publish a new version, go to **Actions → Release → Run workflow** and enter the version number. The workflow will bump the version, build the `.lumenpack`, and create a GitHub release automatically.
+
+**Required setup** — the workflow needs write access to your repository. Enable it at:
+
+- **Repository:** Settings → Actions → General → Workflow permissions → **Read and write permissions**
+- **Organization (if applicable):** Org Settings → Actions → General → Workflow permissions → **Read and write permissions**
 
 ## Adding Tailwind CSS
 
 ```bash
-pnpm add -D tailwindcss @tailwindcss/postcss
+npm install -D tailwindcss @tailwindcss/postcss
 ```
 
 Then add to `vite.config.ts`:
