@@ -42,7 +42,7 @@ jobs:
         run: pnpm install
 
       - name: Build all packages
-        run: pnpm build
+        run: pnpm --filter '!@lumen-media/example-*' -r build
 
       - name: Bump version
         run: |
