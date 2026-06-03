@@ -1,18 +1,8 @@
 name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      package:
-        description: "Package to release"
-        required: true
-        type: choice
-        options:
-          - module-sdk
-          - module-cli
-      version:
-        description: "Version (e.g. 1.0.0)"
-        required: true
+  release:
+    types: [published]
 
 permissions:
   contents: write
@@ -38,6 +28,21 @@ jobs:
           cache: pnpm
           registry-url: https://registry.npmjs.org
 
+      - name: Parse tag
+        id: tag
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          if [[ "$TAG" == sdk-v* ]]; then
+            echo "package=module-sdk" >> $GITHUB_OUTPUT
+            echo "version=${TAG#sdk-v}" >> $GITHUB_OUTPUT
+          elif [[ "$TAG" == cli-v* ]]; then
+            echo "package=module-cli" >> $GITHUB_OUTPUT
+            echo "version=${TAG#cli-v}" >> $GITHUB_OUTPUT
+          else
+            echo "Unknown tag format: $TAG (expected sdk-vX.Y.Z or cli-vX.Y.Z)"
+            exit 1
+          fi
+
       - name: Install dependencies
         run: pnpm install
 
@@ -45,12 +50,10 @@ jobs:
         run: pnpm --filter '!@lumen-media/example-*' -r build
 
       - name: Bump version
-        run: |
-          PKG="packages/${{ github.event.inputs.package }}"
-          npm pkg set version=${{ github.event.inputs.version }} --prefix "$PKG"
+        run: npm pkg set version=${{ steps.tag.outputs.version }} --prefix packages/${{ steps.tag.outputs.package }}
 
       - name: Publish to npm
-        run: pnpm --filter @lumen-media/${{ github.event.inputs.package }} publish --access public --no-git-checks
+        run: pnpm --filter @lumen-media/${{ steps.tag.outputs.package }} publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -58,14 +61,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add packages/${{ github.event.inputs.package }}/package.json
-          git diff --staged --quiet || git commit -m "chore(${{ github.event.inputs.package }}): bump to ${{ github.event.inputs.version }} [skip ci]"
+          git add packages/${{ steps.tag.outputs.package }}/package.json
+          git diff --staged --quiet || git commit -m "chore(${{ steps.tag.outputs.package }}): bump to ${{ steps.tag.outputs.version }} [skip ci]"
           git push origin main
-
-      - name: Create GitHub release
-        run: |
-          gh release create "${{ github.event.inputs.package }}-v${{ github.event.inputs.version }}" \
-            --title "${{ github.event.inputs.package }} v${{ github.event.inputs.version }}" \
-            --generate-notes
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
