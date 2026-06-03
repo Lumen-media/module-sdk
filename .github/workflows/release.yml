@@ -1,23 +1,32 @@
 name: Release
 
 on:
-  push:
-    branches: [main]
-
-concurrency: release-${{ github.ref }}
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Package to release"
+        required: true
+        type: choice
+        options:
+          - module-sdk
+          - module-cli
+      version:
+        description: "Version (e.g. 1.0.0)"
+        required: true
 
 permissions:
   contents: write
-  pull-requests: write
-  id-token: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
 
       - uses: pnpm/action-setup@v4
         with:
@@ -29,17 +38,34 @@ jobs:
           cache: pnpm
           registry-url: https://registry.npmjs.org
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install
 
-      - run: pnpm build
+      - name: Build all packages
+        run: pnpm build
 
-      - uses: changesets/action@v1
-        with:
-          publish: pnpm release
-          version: pnpm version-packages
-          commit: "chore(release): version packages"
-          title: "chore(release): version packages"
+      - name: Bump version
+        run: |
+          PKG="packages/${{ github.event.inputs.package }}"
+          npm pkg set version=${{ github.event.inputs.version }} --prefix "$PKG"
+
+      - name: Publish to npm
+        run: pnpm --filter @lumen-media/${{ github.event.inputs.package }} publish --access public --no-git-checks
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add packages/${{ github.event.inputs.package }}/package.json
+          git diff --staged --quiet || git commit -m "chore(${{ github.event.inputs.package }}): bump to ${{ github.event.inputs.version }} [skip ci]"
+          git push origin main
+
+      - name: Create GitHub release
+        run: |
+          gh release create "${{ github.event.inputs.package }}-v${{ github.event.inputs.version }}" \
+            --title "${{ github.event.inputs.package }} v${{ github.event.inputs.version }}" \
+            --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
