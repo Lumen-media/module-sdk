@@ -70,7 +70,8 @@ function copyTree(src: string, dst: string, replacements: Replacements): void {
 	mkdirSync(dst, { recursive: true });
 	for (const entry of readdirSync(src)) {
 		const srcPath = join(src, entry);
-		const dstName = applyReplacements(entry, replacements);
+		const resolvedName = entry.startsWith("_") ? `.${entry.slice(1)}` : entry;
+		const dstName = applyReplacements(resolvedName, replacements);
 		const dstPath = join(dst, dstName);
 		const stat = statSync(srcPath);
 		if (stat.isDirectory()) {
