@@ -52,7 +52,7 @@ export default class MinimalPlugin extends LumenPlugin {
 		});
 	}
 
-	onunload(): void {
+	override onunload(): void {
 		this.host.log.info("Minimal module unloaded");
 	}
 }

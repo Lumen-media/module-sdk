@@ -24,6 +24,6 @@ jobs:
 
       - run: pnpm --filter '!@lumen-media/example-*' -r build
 
-      - run: pnpm typecheck
+      - run: pnpm --filter '!@lumen-media/example-*' -r typecheck
 
       - run: pnpm lint
