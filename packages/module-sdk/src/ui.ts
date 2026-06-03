@@ -5,20 +5,39 @@ import type React from "react";
 
 // ─── Prop interfaces ────────────────────────────────────────────────────────
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
-	size?: "default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg";
+export interface ButtonProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	variant?:
+		| "default"
+		| "destructive"
+		| "outline"
+		| "secondary"
+		| "ghost"
+		| "link";
+	size?:
+		| "default"
+		| "xs"
+		| "sm"
+		| "lg"
+		| "icon"
+		| "icon-xs"
+		| "icon-sm"
+		| "icon-lg";
 	title?: string;
 	render?: React.ReactElement;
 }
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps
+	extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+export interface TextareaProps
+	extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
-export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+export interface LabelProps
+	extends React.LabelHTMLAttributes<HTMLLabelElement> {}
 
-export interface SwitchProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface SwitchProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	checked?: boolean;
 	defaultChecked?: boolean;
 	onCheckedChange?: (checked: boolean) => void;
@@ -40,28 +59,40 @@ export interface DialogRootProps {
 	dismissible?: boolean;
 	children?: React.ReactNode;
 }
-export interface DialogTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface DialogTriggerProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface DialogContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DialogContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	showCloseButton?: boolean;
 }
-export interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
-export interface DialogDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
-export interface DialogFooterProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DialogTitleProps
+	extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface DialogDescriptionProps
+	extends React.HTMLAttributes<HTMLParagraphElement> {}
+export interface DialogFooterProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	showCloseButton?: boolean;
 }
-export interface DialogCloseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface DialogCloseProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface DialogOverlayProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface DialogPortalProps { children?: React.ReactNode }
+export interface DialogOverlayProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface DialogPortalProps {
+	children?: React.ReactNode;
+}
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
 export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
-export interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
-export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardTitleProps
+	extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface CardDescriptionProps
+	extends React.HTMLAttributes<HTMLParagraphElement> {}
+export interface CardContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
 export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export interface TabsRootProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -71,13 +102,15 @@ export interface TabsRootProps extends React.HTMLAttributes<HTMLDivElement> {
 	orientation?: "horizontal" | "vertical";
 }
 export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface TabsTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface TabsTriggerProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	value: string;
 }
 export interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
 	value: string;
 }
-export interface TabsIndicatorProps extends React.HTMLAttributes<HTMLSpanElement> {}
+export interface TabsIndicatorProps
+	extends React.HTMLAttributes<HTMLSpanElement> {}
 
 export interface SelectRootProps {
 	value?: string;
@@ -88,18 +121,24 @@ export interface SelectRootProps {
 	disabled?: boolean;
 	children?: React.ReactNode;
 }
-export interface SelectTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
-export interface SelectValueProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface SelectTriggerProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface SelectValueProps
+	extends React.HTMLAttributes<HTMLSpanElement> {
 	placeholder?: string;
 }
-export interface SelectContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface SelectContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
 export interface SelectItemProps extends React.HTMLAttributes<HTMLDivElement> {
 	value: string;
 	disabled?: boolean;
 }
-export interface SelectLabelProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface SelectGroupProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface SelectSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface SelectLabelProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface SelectGroupProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface SelectSeparatorProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
 
 export interface TooltipRootProps {
 	open?: boolean;
@@ -112,10 +151,12 @@ export interface TooltipProviderProps {
 	delay?: number;
 	children?: React.ReactNode;
 }
-export interface TooltipTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface TooltipTriggerProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface TooltipContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface TooltipContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
 
 export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {}
 export interface ScrollBarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -124,7 +165,8 @@ export interface ScrollBarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export interface SliderProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "defaultValue"> {
+export interface SliderProps
+	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "defaultValue"> {
 	value?: number[];
 	defaultValue?: number[];
 	min?: number;
@@ -139,7 +181,8 @@ export interface SliderProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,
 	rangeClassName?: string;
 }
 
-export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface CheckboxProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	checked?: boolean | "indeterminate";
 	defaultChecked?: boolean;
 	onCheckedChange?: (checked: boolean | "indeterminate") => void;
@@ -150,7 +193,8 @@ export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
 	max?: number;
 }
 
-export interface ToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ToggleProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: "default" | "secondary" | "outline";
 	size?: "default" | "sm" | "lg";
 	pressed?: boolean;
@@ -171,7 +215,8 @@ export interface ToggleGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 	onValueChange?: (value: string[]) => void;
 	children?: React.ReactNode;
 }
-export interface ToggleGroupItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ToggleGroupItemProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: "default" | "secondary" | "outline";
 	size?: "default" | "sm" | "lg";
 	value: string;
@@ -185,10 +230,12 @@ export interface HoverCardRootProps {
 	closeDelay?: number;
 	children?: React.ReactNode;
 }
-export interface HoverCardTriggerProps extends React.HTMLAttributes<HTMLElement> {
+export interface HoverCardTriggerProps
+	extends React.HTMLAttributes<HTMLElement> {
 	render?: React.ReactElement;
 }
-export interface HoverCardContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface HoverCardContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	side?: "top" | "right" | "bottom" | "left";
 	sideOffset?: number;
 	align?: "start" | "center" | "end";
@@ -203,26 +250,35 @@ export interface ComboboxProps {
 	onInputValueChange?: (value: string) => void;
 	children?: React.ReactNode;
 }
-export interface ComboboxInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface ComboboxInputProps
+	extends React.InputHTMLAttributes<HTMLInputElement> {
 	showTrigger?: boolean;
 	showClear?: boolean;
 }
-export interface ComboboxContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ComboboxContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	side?: "top" | "right" | "bottom" | "left";
 	sideOffset?: number;
 	align?: "start" | "center" | "end";
 	alignOffset?: number;
 }
-export interface ComboboxListProps extends React.HTMLAttributes<HTMLUListElement> {}
+export interface ComboboxListProps
+	extends React.HTMLAttributes<HTMLUListElement> {}
 export interface ComboboxItemProps extends React.HTMLAttributes<HTMLLIElement> {
 	value: string;
 	disabled?: boolean;
 }
-export interface ComboboxGroupProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface ComboboxLabelProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface ComboboxCollectionProps { children?: React.ReactNode }
-export interface ComboboxEmptyProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface ComboboxSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ComboboxGroupProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ComboboxLabelProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ComboboxCollectionProps {
+	children?: React.ReactNode;
+}
+export interface ComboboxEmptyProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ComboboxSeparatorProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
 
 export interface AlertDialogRootProps {
 	open?: boolean;
@@ -230,19 +286,31 @@ export interface AlertDialogRootProps {
 	defaultOpen?: boolean;
 	children?: React.ReactNode;
 }
-export interface AlertDialogContentProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface AlertDialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
-export interface AlertDialogDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
-export interface AlertDialogActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
-export interface AlertDialogCancelProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
-export interface AlertDialogTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface AlertDialogContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface AlertDialogTitleProps
+	extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface AlertDialogDescriptionProps
+	extends React.HTMLAttributes<HTMLParagraphElement> {}
+export interface AlertDialogActionProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface AlertDialogCancelProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface AlertDialogTriggerProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface AlertDialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface AlertDialogFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface AlertDialogMediaProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface AlertDialogOverlayProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface AlertDialogPortalProps { children?: React.ReactNode }
+export interface AlertDialogHeaderProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface AlertDialogFooterProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface AlertDialogMediaProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface AlertDialogOverlayProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface AlertDialogPortalProps {
+	children?: React.ReactNode;
+}
 
 export interface PopoverRootProps {
 	open?: boolean;
@@ -250,18 +318,23 @@ export interface PopoverRootProps {
 	defaultOpen?: boolean;
 	children?: React.ReactNode;
 }
-export interface PopoverTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface PopoverTriggerProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PopoverContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	align?: "start" | "center" | "end";
 	alignOffset?: number;
 	side?: "top" | "right" | "bottom" | "left";
 	sideOffset?: number;
 }
-export interface PopoverHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface PopoverTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
-export interface PopoverDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
+export interface PopoverHeaderProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface PopoverTitleProps
+	extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface PopoverDescriptionProps
+	extends React.HTMLAttributes<HTMLParagraphElement> {}
 
 export interface DropdownMenuRootProps {
 	open?: boolean;
@@ -270,59 +343,88 @@ export interface DropdownMenuRootProps {
 	modal?: boolean;
 	children?: React.ReactNode;
 }
-export interface DropdownMenuTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface DropdownMenuTriggerProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface DropdownMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	align?: "start" | "center" | "end";
 	side?: "top" | "right" | "bottom" | "left";
 	sideOffset?: number;
 }
-export interface DropdownMenuItemProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuItemProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	disabled?: boolean;
 	inset?: boolean;
 }
-export interface DropdownMenuCheckboxItemProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuCheckboxItemProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	checked?: boolean | "indeterminate";
 	onCheckedChange?: (checked: boolean) => void;
 	disabled?: boolean;
 }
-export interface DropdownMenuRadioItemProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuRadioItemProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	value: string;
 	disabled?: boolean;
 }
-export interface DropdownMenuRadioGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuRadioGroupProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	value?: string;
 	onValueChange?: (value: string) => void;
 }
-export interface DropdownMenuLabelProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuLabelProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	inset?: boolean;
 }
-export interface DropdownMenuSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface DropdownMenuShortcutProps extends React.HTMLAttributes<HTMLSpanElement> {}
-export interface DropdownMenuGroupProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface DropdownMenuPortalProps { children?: React.ReactNode }
-export interface DropdownMenuSubProps { children?: React.ReactNode }
-export interface DropdownMenuSubTriggerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuSeparatorProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface DropdownMenuShortcutProps
+	extends React.HTMLAttributes<HTMLSpanElement> {}
+export interface DropdownMenuGroupProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface DropdownMenuPortalProps {
+	children?: React.ReactNode;
+}
+export interface DropdownMenuSubProps {
+	children?: React.ReactNode;
+}
+export interface DropdownMenuSubTriggerProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	inset?: boolean;
 }
-export interface DropdownMenuSubContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface DropdownMenuSubContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
 
 export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {}
-export interface TableHeaderProps extends React.HTMLAttributes<HTMLTableSectionElement> {}
-export interface TableBodyProps extends React.HTMLAttributes<HTMLTableSectionElement> {}
-export interface TableFooterProps extends React.HTMLAttributes<HTMLTableSectionElement> {}
-export interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {}
-export interface TableHeadProps extends React.ThHTMLAttributes<HTMLTableCellElement> {}
-export interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {}
-export interface TableCaptionProps extends React.HTMLAttributes<HTMLTableCaptionElement> {}
+export interface TableHeaderProps
+	extends React.HTMLAttributes<HTMLTableSectionElement> {}
+export interface TableBodyProps
+	extends React.HTMLAttributes<HTMLTableSectionElement> {}
+export interface TableFooterProps
+	extends React.HTMLAttributes<HTMLTableSectionElement> {}
+export interface TableRowProps
+	extends React.HTMLAttributes<HTMLTableRowElement> {}
+export interface TableHeadProps
+	extends React.ThHTMLAttributes<HTMLTableCellElement> {}
+export interface TableCellProps
+	extends React.TdHTMLAttributes<HTMLTableCellElement> {}
+export interface TableCaptionProps
+	extends React.HTMLAttributes<HTMLTableCaptionElement> {}
 
-export interface AvatarRootProps extends React.HTMLAttributes<HTMLSpanElement> {}
-export interface AvatarImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
-export interface AvatarFallbackProps extends React.HTMLAttributes<HTMLSpanElement> {}
-export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface AvatarGroupCountProps extends React.HTMLAttributes<HTMLSpanElement> {}
-export interface AvatarBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {}
+export interface AvatarRootProps
+	extends React.HTMLAttributes<HTMLSpanElement> {}
+export interface AvatarImageProps
+	extends React.ImgHTMLAttributes<HTMLImageElement> {}
+export interface AvatarFallbackProps
+	extends React.HTMLAttributes<HTMLSpanElement> {}
+export interface AvatarGroupProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface AvatarGroupCountProps
+	extends React.HTMLAttributes<HTMLSpanElement> {}
+export interface AvatarBadgeProps
+	extends React.HTMLAttributes<HTMLSpanElement> {}
 
 export interface DrawerRootProps {
 	open?: boolean;
@@ -331,33 +433,53 @@ export interface DrawerRootProps {
 	direction?: "top" | "right" | "bottom" | "left";
 	children?: React.ReactNode;
 }
-export interface DrawerTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface DrawerTriggerProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface DrawerContentProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface DrawerHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface DrawerFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface DrawerTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
-export interface DrawerDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
-export interface DrawerCloseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface DrawerContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface DrawerHeaderProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface DrawerFooterProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface DrawerTitleProps
+	extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface DrawerDescriptionProps
+	extends React.HTMLAttributes<HTMLParagraphElement> {}
+export interface DrawerCloseProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	render?: React.ReactElement;
 }
-export interface DrawerOverlayProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface DrawerPortalProps { children?: React.ReactNode }
+export interface DrawerOverlayProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface DrawerPortalProps {
+	children?: React.ReactNode;
+}
 
 export interface EmptyRootProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface EmptyHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface EmptyTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
-export interface EmptyDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
-export interface EmptyContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface EmptyHeaderProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface EmptyTitleProps
+	extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface EmptyDescriptionProps
+	extends React.HTMLAttributes<HTMLParagraphElement> {}
+export interface EmptyContentProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
 export interface EmptyMediaProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export interface InputGroupRootProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface InputGroupAddonProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface InputGroupButtonProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface InputGroupTextProps extends React.HTMLAttributes<HTMLSpanElement> {}
-export interface InputGroupInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
-export interface InputGroupTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+export interface InputGroupRootProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface InputGroupAddonProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface InputGroupButtonProps
+	extends React.HTMLAttributes<HTMLDivElement> {}
+export interface InputGroupTextProps
+	extends React.HTMLAttributes<HTMLSpanElement> {}
+export interface InputGroupInputProps
+	extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface InputGroupTextareaProps
+	extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
 const _stub = null as unknown;
 type AnyComp<P = object> = React.ComponentType<P>;
@@ -537,7 +659,8 @@ export interface TextEditorRef {
 	editor: unknown;
 }
 
-export interface TextEditorProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+export interface TextEditorProps
+	extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
 	defaultValue?: string;
 	placeholder?: string;
 	onChange?: (markdown: string) => void;
@@ -546,7 +669,8 @@ export interface TextEditorProps extends Omit<React.HTMLAttributes<HTMLDivElemen
 	children?: React.ReactNode;
 }
 
-export interface TextEditorToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TextEditorToolbarProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	editorRef: React.RefObject<TextEditorRef | null>;
 }
 

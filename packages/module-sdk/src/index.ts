@@ -32,12 +32,12 @@ export interface ModuleManifest {
 export type LumenWindow = "main" | "presenter";
 
 export type SlotName =
- "sidebar.left.tabs"
+	| "sidebar.left.tabs"
 	| "sidebar.right.tabs"
 	| "main.center"
 	| "dialog"
 	| "presenter.content"
-		| "settings.section"
+	| "settings.section"
 	| "command-palette.section"
 	| "editor.lyrics.toolbar";
 
@@ -66,7 +66,7 @@ export interface CommandSpec {
 	icon?: ComponentType<{ className?: string }>;
 	keybinding?: string;
 	keywords?: string[];
-	type?: 'action' | 'app';
+	type?: "action" | "app";
 	run?: (args?: unknown) => unknown;
 	component?: ComponentType<CommanderAppProps>;
 }

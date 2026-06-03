@@ -6,10 +6,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { scaffoldModule } from "../index.js";
 
 const tmp = join(tmpdir(), "lumen-scaffold-test");
-const templateDir = resolve(
-	dirname(fileURLToPath(import.meta.url)),
-	"../..",
-);
+const templateDir = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
 beforeEach(() => mkdirSync(tmp, { recursive: true }));
 afterEach(() => rmSync(tmp, { recursive: true, force: true }));

@@ -22,7 +22,12 @@ export interface LumenModuleOptions {
 	assets?: string;
 }
 
-const HOST_EXTERNALS = ["react", "react-dom", "@lumen-media/ui", "@lumen-media/module-sdk"];
+const HOST_EXTERNALS = [
+	"react",
+	"react-dom",
+	"@lumen-media/ui",
+	"@lumen-media/module-sdk",
+];
 
 function isHostExternal(id: string): boolean {
 	if (HOST_EXTERNALS.includes(id)) return true;
@@ -86,7 +91,10 @@ export default function lumenModule(opts: LumenModuleOptions = {}): Plugin {
 
 			const pkgPath = resolve(projectRoot, "package.json");
 			const pkg = existsSync(pkgPath)
-				? (JSON.parse(readFileSync(pkgPath, "utf8")) as { version?: string; description?: string })
+				? (JSON.parse(readFileSync(pkgPath, "utf8")) as {
+						version?: string;
+						description?: string;
+					})
 				: {};
 
 			const outManifest = {
@@ -94,7 +102,10 @@ export default function lumenModule(opts: LumenModuleOptions = {}): Plugin {
 				...(pkg.version ? { version: pkg.version } : {}),
 				...(pkg.description ? { description: pkg.description } : {}),
 			};
-			writeFileSync(resolve(outDir, "manifest.json"), JSON.stringify(outManifest, null, 2));
+			writeFileSync(
+				resolve(outDir, "manifest.json"),
+				JSON.stringify(outManifest, null, 2),
+			);
 
 			const stylesPath = opts.styles
 				? resolve(projectRoot, opts.styles)

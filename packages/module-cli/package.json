@@ -1,43 +1,43 @@
 {
-  "name": "@lumen-media/module-cli",
-  "version": "0.3.3",
-  "description": "Command-line tool for building Lumen modules",
-  "type": "module",
-  "bin": {
-    "lumen-module": "./dist/lumen-module.js"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "archiver": "^7.0.1"
-  },
-  "peerDependencies": {
-    "vite": ">=5"
-  },
-  "devDependencies": {
-    "@lumen-media/create-module": "workspace:*",
-    "@lumen-media/module-build": "workspace:*",
-    "@lumen-media/module-sdk": "workspace:*",
-    "@types/archiver": "^6.0.3",
-    "@types/node": "^22.10.0",
-    "vite": "^7.0.0"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Lumen-media/module-sdk.git",
-    "directory": "packages/module-cli"
-  },
-  "keywords": [
-    "lumen",
-    "module",
-    "cli",
-    "sdk"
-  ]
+	"name": "@lumen-media/module-cli",
+	"version": "0.3.3",
+	"description": "Command-line tool for building Lumen modules",
+	"type": "module",
+	"bin": {
+		"lumen-module": "./dist/lumen-module.js"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"archiver": "^7.0.1"
+	},
+	"peerDependencies": {
+		"vite": ">=5"
+	},
+	"devDependencies": {
+		"@lumen-media/create-module": "workspace:*",
+		"@lumen-media/module-build": "workspace:*",
+		"@lumen-media/module-sdk": "workspace:*",
+		"@types/archiver": "^6.0.3",
+		"@types/node": "^22.10.0",
+		"vite": "^7.0.0"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Lumen-media/module-sdk.git",
+		"directory": "packages/module-cli"
+	},
+	"keywords": [
+		"lumen",
+		"module",
+		"cli",
+		"sdk"
+	]
 }

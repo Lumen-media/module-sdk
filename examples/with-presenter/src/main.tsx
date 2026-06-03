@@ -1,5 +1,8 @@
 import { type LumenHost, LumenPlugin } from "@lumen-media/module-sdk";
-import { LumenHostProvider, useSlideState } from "@lumen-media/module-sdk/hooks";
+import {
+	LumenHostProvider,
+	useSlideState,
+} from "@lumen-media/module-sdk/hooks";
 
 function SlideStatePanel() {
 	const state = useSlideState();
