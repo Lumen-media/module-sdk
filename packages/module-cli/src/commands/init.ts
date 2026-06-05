@@ -20,7 +20,7 @@ function printBanner(name: string) {
 	const tag = version ? ` v${version}` : "";
 
 	console.log("");
-	console.log("  \x1b[36m◆  Lumen Module\x1b[0m" + `\x1b[2m${tag}\x1b[0m`);
+	console.log(`  \x1b[36m◆  Lumen Module\x1b[0m\x1b[2m${tag}\x1b[0m`);
 	console.log("");
 	console.log(`  \x1b[2mScaffolding:\x1b[0m \x1b[1m${name}\x1b[0m`);
 	console.log("");

@@ -204,6 +204,11 @@ export type PlayerHostAPI = Record<string, never>;
 export interface ThemesHostAPI {
 	current(): string;
 	onChange(handler: (theme: string) => void): Disposable;
+	defaultBackground(): {
+		src: string;
+		type: "theme" | "image" | "video";
+		name: string;
+	} | null;
 }
 
 export interface QueueItem {

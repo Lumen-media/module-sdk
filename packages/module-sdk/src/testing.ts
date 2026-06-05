@@ -57,6 +57,7 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 		themes: {
 			current: () => "dark",
 			onChange: () => disposable,
+			defaultBackground: () => null,
 		},
 		fonts: {
 			list: () => Promise.resolve([]),
