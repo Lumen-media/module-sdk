@@ -206,6 +206,29 @@ Consequences:
 - **Adding a new host service is a coordinated change.** New interface added in the SDK → new SDK release → app implements → app release ships. Modules can adopt the new API by bumping their SDK peer-dep range.
 - **Breaking changes go through the SDK.** If a host service signature changes, the SDK majors; the app and modules align via that major bump.
 
+### Runtime-ahead methods
+
+Occasionally the Lumen app ships a method that is not yet reflected in the SDK types. Modules can access these via a cast:
+
+```ts
+const hostExt = host as unknown as {
+  themes: {
+    onDefaultBackgroundChange?: (
+      handler: (bg: { src: string; type: string; name: string } | null) => void
+    ) => { dispose(): void }
+  }
+}
+hostExt.themes.onDefaultBackgroundChange?.((bg) => { ... })
+```
+
+**When this happens, open a PR to add the method to the SDK** so the next minor includes it and modules no longer need the cast.
+
+Known runtime-ahead methods as of SDK 0.6.x:
+
+| Method | On | Notes |
+|---|---|---|
+| `onDefaultBackgroundChange(handler)` | `host.themes` | Delivers the active profile's default background as a blob URL. The host reads the file on the module's behalf — `host.fs.read()` cannot be used directly because module file access is sandboxed to the module's own data directory and will throw `path traversal attempt blocked` for host-owned paths. |
+
 ---
 
 ## Versioning discipline
