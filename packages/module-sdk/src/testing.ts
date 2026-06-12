@@ -22,6 +22,7 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 			openCommandPalette: noop,
 			openDialog: noop,
 			openBackgroundPicker: noop,
+			openMediaPicker: noop,
 		},
 		bus: { emit: noop, on: () => disposable },
 		events: { emit: noop, on: () => disposable },
@@ -44,9 +45,16 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 		queue: {
 			state: () => ({ items: [], currentIndex: null }),
 			onChange: () => disposable,
+			next: noop,
+			previous: noop,
+			goTo: noop,
+			registerTrigger: () => disposable,
 		},
 		library: {},
-		player: {},
+		player: {
+			nextSlide: noop,
+			play: noop,
+		},
 		presentation: {
 			state: () => "idle",
 			onStateChange: () => disposable,

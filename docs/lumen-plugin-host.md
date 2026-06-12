@@ -153,17 +153,18 @@ async onload(host: LumenHost) {
 | `host.panels` | Registrar componentes React em slots do app. |
 | `host.commands` | Adicionar comandos, apps e prefixos na command palette. |
 | `host.menus` | Registrar menus ou adicionar itens a menus existentes. |
-| `host.ui` | Mostrar notificacoes, confirmar, pedir texto, abrir command palette, dialog e seletor de background. |
+| `host.ui` | Mostrar notificacoes, confirmar, pedir texto, abrir command palette, dialog, seletor de background e seletor de midia. |
 | `host.bus` | Publicar e ouvir topicos compartilhados. |
 | `host.events` | Publicar e ouvir eventos com a mesma interface do bus. |
 | `host.data` | Persistir JSON e usar SQLite escopados ao modulo. |
 | `host.settings` | Carregar, salvar e observar configuracoes do modulo. |
-| `host.queue` | Ler estado da fila e observar mudancas. |
+| `host.queue` | Ler estado da fila, observar mudancas e navegar (next/previous/goTo). |
 | `host.presentation` | Projetar ou limpar uma view na janela de apresentacao. |
 | `host.themes` | Ler tema atual e observar mudancas. |
 | `host.fonts` | Listar fontes disponiveis. |
 | `host.log` | Escrever logs prefixados pelo modulo. |
-| `host.lyrics`, `host.library`, `host.player` | Reservados no contrato atual da SDK. |
+| `host.player` | Controlar o player ativo: nextSlide, play por id. |
+| `host.lyrics`, `host.library` | Reservados no contrato atual da SDK. |
 
 ## Paineis com `host.panels`
 
@@ -333,9 +334,29 @@ const name = await host.ui.prompt({
 
 host.ui.openCommandPalette("note ");
 host.ui.openDialog(`${host.meta.id}.dialog`);
+
+// Abre o seletor de background (tema, imagem ou video)
 host.ui.openBackgroundPicker((background) => {
+	// background: { type: "theme" | "image" | "video", src: string, name: string }
 	host.log.info("selected background", background);
 });
+
+// Abre o seletor de midia da biblioteca
+host.ui.openMediaPicker((item) => {
+	// item: LibraryItem
+	host.log.info("selected media", item.id, item.title, item.type);
+});
+```
+
+### `LibraryItem`
+
+```ts
+interface LibraryItem {
+	id: string;
+	title: string;
+	type: "image" | "audio" | "video" | "lyric" | "presentation";
+	thumbnail?: string;
+}
 ```
 
 ## Comunicacao com `host.bus` e `host.events`
@@ -434,6 +455,11 @@ host.log.info("current queue item", {
 host.queue.onChange((next) => {
 	host.log.info("queue changed", next);
 });
+
+// Navegacao
+host.queue.next();
+host.queue.previous();
+host.queue.goTo(2); // 0-based
 ```
 
 Cada item da fila no contrato atual tem:
@@ -444,6 +470,14 @@ interface QueueItem {
 	title: string;
 }
 ```
+
+| Metodo | Uso |
+|---|---|
+| `state()` | Retorna `{ items, currentIndex }`. |
+| `onChange(handler)` | Observa mudancas no estado da fila. |
+| `next()` | Avanca para o proximo item. |
+| `previous()` | Volta para o item anterior. |
+| `goTo(index)` | Vai para o item no indice informado (0-based). |
 
 ## Apresentacao com `host.presentation`
 
@@ -509,9 +543,26 @@ host.log.warn("something to inspect");
 host.log.error("something failed");
 ```
 
+## Player com `host.player`
+
+Controle o player de midia ativo.
+
+```ts
+// Avanca para o proximo slide (apresentacoes e letras)
+host.player.nextSlide();
+
+// Da play em um item da biblioteca pelo id
+host.player.play("media-item-id");
+```
+
+| Metodo | Uso |
+|---|---|
+| `nextSlide()` | Avanca o slide da apresentacao ou lyric ativa. |
+| `play(itemId)` | Da play no item da biblioteca com o id informado. |
+
 ## APIs reservadas
 
-`host.lyrics`, `host.library` e `host.player` existem no shape de `LumenHost`, mas no contrato atual da SDK sao tipadas como `Record<string, never>`. Trate essas areas como reservadas para evolucao da API.
+`host.lyrics` e `host.library` existem no shape de `LumenHost`, mas no contrato atual da SDK sao tipadas como `Record<string, never>`. Trate essas areas como reservadas para evolucao da API.
 
 ## Padroes recomendados
 

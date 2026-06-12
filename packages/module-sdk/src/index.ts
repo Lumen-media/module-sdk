@@ -118,6 +118,13 @@ export interface SelectedBackground {
 	name: string;
 }
 
+export interface LibraryItem {
+	id: string;
+	title: string;
+	type: "image" | "audio" | "video" | "lyric" | "presentation";
+	thumbnail?: string;
+}
+
 export interface UIAPI {
 	notify(opts: NotifyOpts): void;
 	confirm(opts: ConfirmOpts): Promise<boolean>;
@@ -125,6 +132,7 @@ export interface UIAPI {
 	openCommandPalette(prefilter?: string): void;
 	openDialog(panelId: string): void;
 	openBackgroundPicker(onSelect: (bg: SelectedBackground) => void): void;
+	openMediaPicker(onSelect: (item: LibraryItem) => void): void;
 }
 
 export interface MenuItemSeparator {
@@ -199,7 +207,11 @@ export interface LoggerAPI {
 
 export type LyricsHostAPI = Record<string, never>;
 export type LibraryHostAPI = Record<string, never>;
-export type PlayerHostAPI = Record<string, never>;
+
+export interface PlayerHostAPI {
+	nextSlide(): void;
+	play(itemId: string): void;
+}
 
 export interface ThemesHostAPI {
 	current(): string;
@@ -221,9 +233,22 @@ export interface QueueState {
 	currentIndex: number | null;
 }
 
+export interface QueueTriggerSpec<T = unknown> {
+	id: string;
+	label: string;
+	icon?: ComponentType<{ size?: number; className?: string }>;
+	ConfigComponent: ComponentType<{ value: T; onChange: (value: T) => void }>;
+	defaultConfig: T;
+	onFire(config: T): void;
+}
+
 export interface QueueHostAPI {
 	state(): QueueState;
 	onChange(handler: (state: QueueState) => void): Disposable;
+	next(): void;
+	previous(): void;
+	goTo(index: number): void;
+	registerTrigger<T = unknown>(spec: QueueTriggerSpec<T>): Disposable;
 }
 export interface FontsAPI {
 	list(): Promise<string[]>;
