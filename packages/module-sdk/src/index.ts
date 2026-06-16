@@ -238,6 +238,7 @@ export interface QueueTriggerSpec<T = unknown> {
 	label: string;
 	icon?: ComponentType<{ size?: number; className?: string }>;
 	ConfigComponent: ComponentType<{ value: T; onChange: (value: T) => void }>;
+	SummaryComponent?: ComponentType<{ value: T; onEdit: () => void }>;
 	defaultConfig: T;
 	onFire(config: T): void;
 }

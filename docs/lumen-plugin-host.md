@@ -479,7 +479,7 @@ interface QueueItem {
 
 ### Queue triggers with `registerTrigger`
 
-Triggers appear in the queue context menu (right-click on empty space in the queue panel). When the user adds a trigger instance and any queue item plays, `onFire` is called with the saved config.
+Triggers are placed **between** items in the queue as draggable items. They intercept the auto-advance flow — when the item before the trigger finishes playing, `onFire` is called. The trigger is responsible for calling `host.queue.next()` when it finishes, which resumes the queue and plays the next item.
 
 ```ts
 import { Timer } from 'lucide-react'
@@ -489,23 +489,55 @@ host.queue.registerTrigger({
 	label: 'Countdown Timer',
 	icon: Timer,
 	ConfigComponent: TimerConfig,
+	SummaryComponent: TimerSummary,   // optional compact display inside the queue item
 	defaultConfig: { totalSeconds: 300 },
 	onFire(config) {
 		startMyTimer(config.totalSeconds)
+		// call host.queue.next() when done — this advances the queue
 	},
 })
 ```
+
+#### Auto-advance flow
+
+```
+[Item A ends]
+  → Lumen finds trigger T between A and B
+  → calls T.onFire(config)         ← your module runs here
+  → queue waits
+  → module calls host.queue.next() ← unblocks the queue
+  → Item B plays
+```
+
+Triggers only fire during auto-advance — they do **not** fire when the user manually double-clicks an item.
 
 #### `QueueTriggerSpec<T>`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | ✓ | Unique identifier (`module-id.name`) |
-| `label` | `string` | ✓ | Name shown in the context menu |
+| `label` | `string` | ✓ | Shown in the context menu and togglable in the queue item |
 | `icon` | `ComponentType` | | Lucide or custom icon |
 | `ConfigComponent` | `ComponentType<{ value: T; onChange: (v: T) => void }>` | ✓ | Rendered in the config dialog |
+| `SummaryComponent` | `ComponentType<{ value: T; onEdit: () => void }>` | | Compact inline display of the config rendered inside the queue item |
 | `defaultConfig` | `T` | ✓ | Initial value for new trigger instances |
-| `onFire` | `(config: T) => void` | ✓ | Called when any queue item plays |
+| `onFire` | `(config: T) => void` | ✓ | Called when auto-advance reaches this trigger |
+
+#### `SummaryComponent`
+
+An optional compact view rendered inside the trigger's queue item. Use it to show a human-readable summary of the current config (e.g. `"5:00"` for a countdown). `onEdit` opens the config dialog when called.
+
+```tsx
+function TimerSummary({ value, onEdit }: { value: TimerConfig; onEdit: () => void }) {
+  const mins = Math.floor(value.totalSeconds / 60)
+  const secs = value.totalSeconds % 60
+  return (
+    <button onClick={onEdit} className="font-mono text-sm">
+      {mins}:{String(secs).padStart(2, '0')}
+    </button>
+  )
+}
+```
 
 ## Presentation with `host.presentation`
 
