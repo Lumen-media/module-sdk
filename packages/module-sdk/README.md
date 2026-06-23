@@ -42,7 +42,29 @@ export default class MyPlugin extends LumenPlugin {
 | `host.ui.openDialog(id)` | Open a registered dialog panel |
 | `host.presentation.project(id, props)` | Project a `presenter.content` panel to the media window |
 | `host.presentation.clear()` | Hide the currently projected panel |
+| `host.overlay.project(id, props)` | Project a `presenter.content` panel to the overlay window |
+| `host.overlay.clear()` | Close/clear the overlay window |
 | `host.data.json.get/set(key, value)` | Persist module data locally |
+
+## Overlay output
+
+Use `host.overlay` when a module needs a separate output window instead of taking over the media window. The overlay renders the same kind of panel as presentation output: register a `presenter.content` panel, then project that panel through `host.overlay.project`.
+
+```tsx
+host.panels.add({
+  id: `${host.meta.id}.overlay`,
+  slot: "presenter.content",
+  component: OverlayView,
+});
+
+host.overlay.project(`${host.meta.id}.overlay`, {
+  mode: "corner",
+});
+
+host.overlay.clear();
+```
+
+`host.presentation` and `host.overlay` are independent outputs. Use `presentation` for the media/presenter window and `overlay` for a dedicated overlay window that can stay synchronized through module events, props, or host events.
 
 ## License
 

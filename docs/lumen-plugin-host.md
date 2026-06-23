@@ -573,6 +573,43 @@ host.presentation.clear();
 | `clear()` | Clears the current presentation. |
 | `isWindowOpen()` | Returns whether the presenter window is open. |
 
+
+## Overlay with `host.overlay`
+
+Use `host.overlay` when a module should render in a dedicated overlay window instead of replacing the media/presenter window content. Overlay views use the same panel slot as presentation views: register a `presenter.content` panel, then project it with `host.overlay.project`.
+
+```tsx
+function TimerOverlay({ remaining }: { remaining: number }) {
+	return <div className="timer-overlay">{remaining}</div>;
+}
+
+host.panels.add({
+	id: `${host.meta.id}.overlay`,
+	slot: "presenter.content",
+	component: TimerOverlay,
+});
+
+host.overlay.project(`${host.meta.id}.overlay`, {
+	remaining: 300,
+});
+
+host.overlay.onStateChange((state) => {
+	host.log.info("overlay state", state);
+});
+
+host.overlay.clear();
+```
+
+| Method | Usage |
+|---|---|
+| `state()` | Returns `"idle"` or `"live"`. |
+| `onStateChange(handler)` | Observes overlay state transitions. |
+| `project(viewId, props?)` | Opens the overlay window if needed and projects a registered view. |
+| `clear()` | Clears and closes the overlay output. |
+| `isWindowOpen()` | Returns whether an overlay view is currently active. |
+
+`host.presentation` and `host.overlay` are separate outputs. Use `host.presentation` for content that should own the media window. Use `host.overlay` for content that should appear in a separate app window, such as timers, lower thirds, widgets, or other synchronized overlays. If an overlay needs live updates, keep broadcasting through module events or host events; the overlay window loads the module presenter-side just like the media window does.
+
 ## Themes with `host.themes`
 
 ```ts

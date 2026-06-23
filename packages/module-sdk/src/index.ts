@@ -263,6 +263,14 @@ export interface PresentationHostAPI {
 	isWindowOpen(): boolean;
 }
 
+export interface OverlayHostAPI {
+	state(): "idle" | "live";
+	onStateChange(handler: (state: "idle" | "live") => void): Disposable;
+	project(viewId: string, props?: unknown): void;
+	clear(): void;
+	isWindowOpen(): boolean;
+}
+
 export interface LumenHost {
 	meta: { id: string; version: string };
 	window: LumenWindow;
@@ -284,6 +292,7 @@ export interface LumenHost {
 	library: LibraryHostAPI;
 	player: PlayerHostAPI;
 	presentation: PresentationHostAPI;
+	overlay: OverlayHostAPI;
 	themes: ThemesHostAPI;
 	fonts: FontsAPI;
 

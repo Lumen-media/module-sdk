@@ -62,6 +62,13 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 			clear: noop,
 			isWindowOpen: () => false,
 		},
+		overlay: {
+			state: () => "idle",
+			onStateChange: () => disposable,
+			project: noop,
+			clear: noop,
+			isWindowOpen: () => false,
+		},
 		themes: {
 			current: () => "dark",
 			onChange: () => disposable,
