@@ -159,7 +159,8 @@ async onload(host: LumenHost) {
 | `host.data` | Persist JSON and use SQLite scoped to the module. |
 | `host.settings` | Load, save and observe module settings. |
 | `host.queue` | Read queue state, observe changes, navigate and register triggers. |
-| `host.presentation` | Project or clear a view in the presenter window. |
+| host.presentation | Project or clear a view in the presenter window. |
+| host.overlay | Project or clear a view in the dedicated overlay window. |
 | `host.themes` | Read current theme and observe changes. |
 | `host.fonts` | List available fonts. |
 | `host.log` | Write logs prefixed by the module. |
@@ -192,10 +193,13 @@ Available slots:
 | `sidebar.right.tabs` | Right sidebar tabs. |
 | `main.center` | Main center area. |
 | `dialog` | Dialog content opened by `host.ui.openDialog(id)`. |
-| `presenter.content` | Content for the presenter window. |
+| `presenter.content` | Content for the presenter and overlay outputs. |
 | `settings.section` | Settings section. |
 | `command-palette.section` | Section inside the command palette. |
 | `editor.lyrics.toolbar` | Lyrics editor toolbar. |
+| `app.header.trailing` | Compact operator-facing UI slot at the start of the header's right-side actions. |
+
+Use `app.header.trailing` for small status chips, icons, or quick actions. Keep the content compact: the shell wraps each module panel in a constrained container so it does not take over the app header.
 
 ## Commands with `host.commands`
 
@@ -687,3 +691,5 @@ if (host.window === "presenter") {
 ```
 
 Use `onunload` to clean up only what you created outside the host APIs.
+
+
