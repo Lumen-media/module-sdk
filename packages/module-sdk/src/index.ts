@@ -305,4 +305,3 @@ export abstract class LumenPlugin {
 	onunload?(): void | Promise<void>;
 }
 
-
