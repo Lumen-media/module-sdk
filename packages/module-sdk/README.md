@@ -36,7 +36,7 @@ export default class MyPlugin extends LumenPlugin {
 
 | API | Description |
 |---|---|
-| `host.panels.add(spec)` | Register a UI panel (`dialog`, `presenter.content`, `sidebar.right.tabs`) |
+| `host.panels.add(spec)` | Register a UI panel (`dialog`, `presenter.content`, `sidebar.right.tabs`, `app.header.trailing`) |
 | `host.menus.addItem(menu, item)` | Add an item to a host menu |
 | `host.commands.add(spec)` | Register a command palette entry |
 | `host.ui.openDialog(id)` | Open a registered dialog panel |
@@ -66,6 +66,24 @@ host.overlay.clear();
 
 `host.presentation` and `host.overlay` are independent outputs. Use `presentation` for the media/presenter window and `overlay` for a dedicated overlay window that can stay synchronized through module events, props, or host events.
 
+## Header trailing slot
+
+Use `app.header.trailing` for compact operator-facing UI in the right side of the main app header. Lumen wraps each module item in a constrained container so modules can expose a small status chip, icon, or action without taking over the header.
+
+```tsx
+host.panels.add({
+  id: `${host.meta.id}.header-status`,
+  slot: "app.header.trailing",
+  component: () => (
+    <button type="button" onClick={() => host.ui.openDialog(`${host.meta.id}.dialog`)}>
+      Open module
+    </button>
+  ),
+});
+```
+
+Keep header content short and action-oriented. Good fits are live timer states, compact connection indicators, or quick actions that reopen the module's main dialog.
 ## License
 
 MIT
+

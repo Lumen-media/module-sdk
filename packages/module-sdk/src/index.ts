@@ -39,7 +39,8 @@ export type SlotName =
 	| "presenter.content"
 	| "settings.section"
 	| "command-palette.section"
-	| "editor.lyrics.toolbar";
+	| "editor.lyrics.toolbar"
+	| "app.header.trailing";
 
 export interface PanelSpec {
 	id: string;
@@ -303,3 +304,5 @@ export abstract class LumenPlugin {
 	abstract onload(host: LumenHost): void | Promise<void>;
 	onunload?(): void | Promise<void>;
 }
+
+
