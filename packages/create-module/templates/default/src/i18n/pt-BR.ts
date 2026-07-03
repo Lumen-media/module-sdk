@@ -1,5 +1,5 @@
-const ptBR: Record<string, string> = {
-  "hello": "Olá de __NAME__!",
+const ptBR = {
+  "hello": "Olá de {{name}}!",
 };
 
 export default ptBR;

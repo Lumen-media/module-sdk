@@ -1,5 +1,5 @@
-const en: Record<string, string> = {
-  "hello": "Hello from __NAME__!",
+const en = {
+  "hello": "Hello from {{name}}!",
 };
 
 export default en;

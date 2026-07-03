@@ -8,7 +8,7 @@ export default class __PASCAL__Plugin extends LumenPlugin {
     host.commands.add({
       id: "__KEBAB__.hello",
       title: "__NAME__: hello",
-      run: () => host.ui.notify({ message: t("hello") }),
+      run: () => host.ui.notify({ message: t("hello", { name: "__NAME__" }) }),
     });
   }
 }
