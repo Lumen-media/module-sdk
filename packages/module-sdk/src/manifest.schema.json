@@ -55,6 +55,20 @@
 		"homepage": { "type": "string", "format": "uri" },
 		"repository": { "type": "string" },
 		"license": { "type": "string" },
-		"keywords": { "type": "array", "items": { "type": "string" } }
+		"keywords": { "type": "array", "items": { "type": "string" } },
+		"permissions": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"network": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"pattern": "^https://"
+					},
+					"description": "URL patterns the module may request via host.net. Only https URLs with optional wildcards are allowed."
+				}
+			}
+		}
 	}
 }

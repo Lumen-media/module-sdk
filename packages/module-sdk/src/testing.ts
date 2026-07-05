@@ -77,6 +77,30 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 		fonts: {
 			list: () => Promise.resolve([]),
 		},
+		fs: {
+			read: () => Promise.resolve(new Uint8Array()),
+			write: () => Promise.resolve(),
+			exists: () => Promise.resolve(false),
+			list: () => Promise.resolve([]),
+			remove: () => Promise.resolve(),
+		},
+		net: {
+			request: <T>() => Promise.resolve({
+				ok: true,
+				status: 200,
+				statusText: "OK" as const,
+				headers: {} as Record<string, string>,
+				url: "",
+				redirected: false,
+				data: null as unknown as T,
+			}),
+			get: <T>() => Promise.resolve(null as unknown as T),
+			post: <T>() => Promise.resolve(null as unknown as T),
+		},
+		i18n: {
+			t: (key: string) => key,
+			locale: () => "en",
+		},
 		log: {
 			debug: noop,
 			info: noop,

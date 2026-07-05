@@ -119,6 +119,9 @@ export interface LumenHost {
 	themes: ThemesHostAPI;
 	fonts: FontsAPI;
 
+	fs: FsAPI;
+	net: NetAPI;
+	i18n: I18nAPI;
 	log: LoggerAPI;
 }
 ```
@@ -149,7 +152,7 @@ async onload(host: LumenHost) {
 ## API map
 
 | API | What it allows |
-|---|---|
+|---|---|---|
 | `host.panels` | Register React components in app slots. |
 | `host.commands` | Add commands, apps and prefixes to the command palette. |
 | `host.menus` | Register menus or add items to existing menus. |
@@ -163,6 +166,9 @@ async onload(host: LumenHost) {
 | host.overlay | Project or clear a view in the dedicated overlay window. |
 | `host.themes` | Read current theme and observe changes. |
 | `host.fonts` | List available fonts. |
+| `host.fs` | Sandboxed file system access within the module's data directory. |
+| `host.net` | Host-managed HTTP requests via Rust/Tauri with permission enforcement. |
+| `host.i18n` | Basic internationalisation for module strings. |
 | `host.log` | Write logs prefixed by the module. |
 | `host.player` | Control the active player: nextSlide, play by id. |
 | `host.lyrics`, `host.library` | Reserved in the current SDK contract. |
@@ -658,6 +664,120 @@ host.player.play("media-item-id");
 |---|---|
 | `nextSlide()` | Advances the active presentation or lyric slide. |
 | `play(itemId)` | Plays the library item with the given id. |
+
+## File system with `host.fs`
+
+Sandboxed file system access within the module's data directory. Paths are always relative — path traversal attempts (`../`) are blocked by the runtime.
+
+```ts
+const bytes = await host.fs.read("cache/data.json");
+await host.fs.write("export.csv", new TextEncoder().encode("id,name\n1,test"));
+const exists = await host.fs.exists("config.json");
+const files = await host.fs.list("cache/");
+await host.fs.remove("temp/file.tmp");
+```
+
+| Method | Returns | Description |
+|---|---|---|
+| `read(path)` | `Uint8Array` | Read a file. |
+| `write(path, data)` | `void` | Write a file (creates parent directories). |
+| `exists(path)` | `boolean` | Check if a path exists. |
+| `list(path)` | `string[]` | List entries in a directory. |
+| `remove(path)` | `void` | Remove a file or directory. |
+
+## Network requests with `host.net`
+
+Host-managed HTTP requests backed by Lumen's Rust/Tauri runtime. Permission checks, timeouts, size limits, and redirect validation are enforced by the host — module code never makes raw network calls.
+
+The primary API is `request()`. Convenience helpers `get()` and `post()` are thin wrappers that throw on non-2xx and return `response.data` directly.
+
+```ts
+// Full control
+const response = await host.net.request<{ items: unknown[] }>({
+  method: "GET",
+  url: "https://api.example.com/items",
+  query: { search: "test", limit: 10 },
+  headers: { Authorization: `Bearer ${token}` },
+  responseType: "json",
+  timeoutMs: 15_000,
+});
+
+if (!response.ok) {
+  throw new Error(`Request failed: ${response.status}`);
+}
+
+// Convenience — throws on non-2xx, returns data
+const data = await host.net.get!("https://api.example.com/items", {
+  query: { limit: 10 },
+});
+
+await host.net.request({
+  method: "POST",
+  url: "https://api.example.com/events",
+  body: { type: "json", value: { kind: "started" } },
+  responseType: "none",
+});
+```
+
+### Request body modes
+
+| Mode | Discriminant | Value |
+|---|---|---|
+| JSON | `{ type: "json", value }` | Any JSON-serializable value |
+| Text | `{ type: "text", value, contentType? }` | Plain text |
+| Bytes | `{ type: "bytes", valueBase64, contentType? }` | Base64-encoded binary |
+| Form | `{ type: "form", value }` | URL-encoded form |
+| Multipart | `{ type: "multipart", parts }` | Not yet supported in v1 |
+
+### Response modes
+
+| Mode | Description |
+|---|---|
+| `json` (default) | Parses body as JSON. Falls back to raw string. |
+| `text` | Returns body as a plain string. |
+| `bytes` | Returns body as a base64 string. |
+| `none` | Returns `null` (fire-and-forget). |
+
+### Defaults
+
+- Method: `GET` without body, `POST` with body.
+- Timeout: 15 s (max 60 s).
+- Max response size: 10 MB (hard limit 50 MB).
+- Follow redirects: yes (max 5 hops).
+- Only `https://` URLs. Localhost, private IPs blocked.
+- Forbidden headers: `Host`, `Content-Length`, `Connection`, `Transfer-Encoding`, `Upgrade`, `Proxy-*`, `Sec-*`.
+
+### Manifest permissions
+
+Modules declare which URLs they can access in `manifest.json`:
+
+```json
+{
+  "permissions": {
+    "network": [
+      "https://www.googleapis.com/youtube/v3/*",
+      "https://api.github.com/repos/example/*"
+    ]
+  }
+}
+```
+
+## Internationalisation with `host.i18n`
+
+Basic string internationalisation.
+
+```ts
+const text = host.i18n.t("greeting", { name: "Gabriel" });
+// "Hello, {{name}}" → "Hello, Gabriel"
+
+const locale = host.i18n.locale();
+// "en-US"
+```
+
+| Method | Returns | Description |
+|---|---|---|
+| `t(key, params?)` | `string` | Translate a key with optional `{{param}}` substitution. |
+| `locale()` | `string` | Current app locale (e.g. `"en-US"`, `"pt-BR"`). |
 
 ## Reserved APIs
 
