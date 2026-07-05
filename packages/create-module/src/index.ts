@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import {
 	existsSync,
 	mkdirSync,
@@ -24,6 +25,19 @@ interface Replacements {
 	__ID__: string;
 	__DESCRIPTION__: string;
 	__AUTHOR__: string;
+}
+
+function resolveLatestVersion(packageName: string): string | null {
+	try {
+		const result = execSync(`npm view ${packageName} version`, {
+			encoding: "utf-8",
+			timeout: 5000,
+			stdio: ["ignore", "pipe", "ignore"],
+		});
+		return result.trim();
+	} catch {
+		return null;
+	}
 }
 
 export async function scaffoldModule(
@@ -62,6 +76,22 @@ export async function scaffoldModule(
 	};
 
 	copyTree(templateRoot, target, replacements);
+
+	// Resolve latest SDK/CLI versions from npm registry
+	const pkgJsonPath = join(target, "package.json");
+	const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf8"));
+
+	const sdkLatest = resolveLatestVersion("@lumen-media/module-sdk");
+	const cliLatest = resolveLatestVersion("@lumen-media/module-cli");
+
+	if (sdkLatest && pkgJson.devDependencies?.["@lumen-media/module-sdk"]) {
+		pkgJson.devDependencies["@lumen-media/module-sdk"] = `^${sdkLatest}`;
+	}
+	if (cliLatest && pkgJson.devDependencies?.["@lumen-media/module-cli"]) {
+		pkgJson.devDependencies["@lumen-media/module-cli"] = `^${cliLatest}`;
+	}
+
+	writeFileSync(pkgJsonPath, `${JSON.stringify(pkgJson, null, 2)}\n`);
 
 	return target;
 }
