@@ -16,8 +16,8 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@lumen-media/module-cli": "^0.3.1",
-    "@lumen-media/module-sdk": "^0.3.0",
+    "@lumen-media/module-cli": "^__CLI_VERSION__",
+    "@lumen-media/module-sdk": "^__SDK_VERSION__",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
