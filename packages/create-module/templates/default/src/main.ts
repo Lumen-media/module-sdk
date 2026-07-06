@@ -1,3 +1,4 @@
+import "./styles.css";
 import { type LumenHost, LumenPlugin } from "@lumen-media/module-sdk";
 import { setupI18n, t } from "./i18n.js";
 

@@ -22,6 +22,7 @@ interface Replacements {
 	__NAME__: string;
 	__KEBAB__: string;
 	__PASCAL__: string;
+	__PREFIX__: string;
 	__ID__: string;
 	__DESCRIPTION__: string;
 	__AUTHOR__: string;
@@ -70,6 +71,7 @@ export async function scaffoldModule(
 		__NAME__: name,
 		__KEBAB__: kebab,
 		__PASCAL__: pascal,
+		__PREFIX__: toPrefix(kebab),
 		__ID__: id,
 		__DESCRIPTION__: opts.description ?? "A Lumen module",
 		__AUTHOR__: opts.author ?? "",
@@ -119,6 +121,15 @@ function applyReplacements(input: string, replacements: Replacements): string {
 		out = out.split(from).join(to);
 	}
 	return out;
+}
+
+function toPrefix(kebab: string): string {
+	return kebab
+		.split("-")
+		.filter(Boolean)
+		.map((word) => word[0])
+		.join("")
+		.toLowerCase();
 }
 
 function toKebab(input: string): string {
