@@ -158,7 +158,13 @@ export interface TooltipTriggerProps
 export interface TooltipContentProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
 
-export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
+	viewportClassName?: string;
+	viewportProps?: React.HTMLAttributes<HTMLDivElement> & {
+		ref?: React.Ref<HTMLDivElement>;
+	};
+	ref?: React.Ref<HTMLDivElement>;
+}
 export interface ScrollBarProps extends React.HTMLAttributes<HTMLDivElement> {
 	orientation?: "horizontal" | "vertical";
 }
