@@ -28,10 +28,14 @@ export interface ButtonProps
 }
 
 export interface InputProps
-	extends React.InputHTMLAttributes<HTMLInputElement> {}
+	extends React.InputHTMLAttributes<HTMLInputElement> {
+	ref?: React.Ref<HTMLInputElement>;
+}
 
 export interface TextareaProps
-	extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+	extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+	ref?: React.Ref<HTMLTextAreaElement>;
+}
 
 export interface LabelProps
 	extends React.LabelHTMLAttributes<HTMLLabelElement> {}
