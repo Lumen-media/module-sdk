@@ -19,6 +19,7 @@ interface CommandSpec {
   type?: 'action' | 'app';                            // default: 'action'
   run?: (args?: unknown) => unknown;                  // called on Enter (action)
   component?: ComponentType<CommanderAppProps>;       // rendered inside the palette (app)
+  commanderSearch?: boolean | CommanderSearchOptions; // opt into the app-view search input
 }
 ```
 
@@ -49,6 +50,7 @@ export default class MyPlugin extends LumenPlugin {
 }
 ```
 
+
 What happens when the user selects this entry:
 1. `run()` is called immediately.
 2. The commander closes.
@@ -59,14 +61,72 @@ What happens when the user selects this entry:
 
 Use `type: 'app'` for commands that open a screen inside the commander instead of closing it. The user sees a back arrow (`←`) in the header and can return to the main list.
 
-Your component receives `{ onClose, onBack }` as props:
+Your component always receives `{ onClose, onBack }` as props. If the command enables `commanderSearch`, it also receives the current search input value and helpers:
 
 ```ts
+interface CommanderSearchAccessoryProps {
+  query: string;
+  setQuery: (query: string) => void;
+  close: () => void;
+  back: () => void;
+}
+
+type CommanderSearchTrailingComponent = ComponentType<CommanderSearchAccessoryProps>;
+
+interface CommanderSearchOptions {
+  placeholder?: string;
+  initialQuery?: string;
+}
+
 interface CommanderAppProps {
-  onClose: () => void;  // closes the entire commander
-  onBack: () => void;   // returns to the main command list
+  onClose: () => void;
+  onBack: () => void;
+  query?: string;
+  setQuery?: (query: string) => void;
+  setSearchTrailing?: Dispatch<SetStateAction<CommanderSearchTrailingComponent | undefined>>;
 }
 ```
+
+
+### App search input and trailing slot
+
+Apps do not show a search input by default. Add `commanderSearch` to the command when the app should use the commander's header input.
+
+```tsx
+import { Settings } from 'lucide-react';
+import { LumenPlugin, type CommanderAppProps, type LumenHost } from '@lumen/module-sdk';
+
+function SearchScreen({ query = '', setSearchTrailing }: CommanderAppProps) {
+  React.useEffect(() => {
+    if (!setSearchTrailing) return;
+
+    setSearchTrailing(() => function SearchActions() {
+      return <button aria-label="Settings"><Settings size={16} /></button>;
+    });
+
+    return () => setSearchTrailing(undefined);
+  }, [setSearchTrailing]);
+
+  return <div>Searching for {query}</div>;
+}
+
+export default class SearchPlugin extends LumenPlugin {
+  onload(host: LumenHost) {
+    host.commands.add({
+      id: 'my-module.search',
+      title: 'Search My Service',
+      type: 'app',
+      commanderSearch: {
+        placeholder: 'Search my service...',
+        initialQuery: '',
+      },
+      component: SearchScreen,
+    });
+  }
+}
+```
+
+`commanderSearch: true` enables the input with the app title as its placeholder. Passing an object lets you set `placeholder` and `initialQuery`. Use `setSearchTrailing` for compact actions that belong beside the input, such as settings, filters, or refresh. Clear it on unmount so the next app view starts clean.
 
 ### Example
 
@@ -167,7 +227,19 @@ interface PrefixResult {
   badge?: string;          // defaults to the prefix title
   run?: () => void;        // called on Enter
   component?: ComponentType<CommanderAppProps>;  // opens an app screen
+  commanderSearch?: boolean | CommanderSearchOptions;
 }
+```
+
+A `PrefixResult` that opens a `component` can also set `commanderSearch`. This is how a prefix handler can open an app screen while keeping the typed prefix query in the commander's header input:
+
+```ts
+return [{
+  id: 'external-search',
+  title: `Search for "${query}"`,
+  component: SearchScreen,
+  commanderSearch: { placeholder: 'Search...', initialQuery: query },
+}];
 ```
 
 ### Registration

@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, Dispatch, SetStateAction } from "react";
 import manifestSchema from "./manifest.schema.json";
 
 export { manifestSchema };
@@ -58,9 +58,29 @@ export interface PanelsAPI {
 	add(spec: PanelSpec): Disposable;
 }
 
+export interface CommanderSearchAccessoryProps {
+	query: string;
+	setQuery: (query: string) => void;
+	close: () => void;
+	back: () => void;
+}
+
+export type CommanderSearchTrailingComponent =
+	ComponentType<CommanderSearchAccessoryProps>;
+
+export interface CommanderSearchOptions {
+	placeholder?: string;
+	initialQuery?: string;
+}
+
 export interface CommanderAppProps {
 	onClose: () => void;
 	onBack: () => void;
+	query?: string;
+	setQuery?: (query: string) => void;
+	setSearchTrailing?: Dispatch<
+		SetStateAction<CommanderSearchTrailingComponent | undefined>
+	>;
 }
 
 export interface CommandSpec {
@@ -73,6 +93,7 @@ export interface CommandSpec {
 	type?: "action" | "app";
 	run?: (args?: unknown) => unknown;
 	component?: ComponentType<CommanderAppProps>;
+	commanderSearch?: boolean | CommanderSearchOptions;
 }
 
 export interface PrefixResult {
@@ -82,6 +103,7 @@ export interface PrefixResult {
 	badge?: string;
 	run?: () => void;
 	component?: ComponentType<CommanderAppProps>;
+	commanderSearch?: boolean | CommanderSearchOptions;
 }
 
 export interface PrefixSpec {

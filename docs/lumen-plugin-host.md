@@ -232,9 +232,10 @@ A command of type `"app"` renders a React sub-interface inside the command palet
 ```tsx
 import type { CommanderAppProps } from "@lumen-media/module-sdk";
 
-function BrowserCommand({ onBack, onClose }: CommanderAppProps) {
+function BrowserCommand({ query = '', onBack, onClose }: CommanderAppProps) {
 	return (
 		<div>
+			<p>Query: {query}</p>
 			<button onClick={onBack}>Back</button>
 			<button onClick={onClose}>Close</button>
 		</div>
@@ -245,9 +246,12 @@ host.commands.add({
 	id: `${host.meta.id}.browser`,
 	title: "Open module browser",
 	type: "app",
+	commanderSearch: { placeholder: "Search browser..." },
 	component: BrowserCommand,
 });
 ```
+
+App commands hide the search field by default. Set `commanderSearch: true` or pass `{ placeholder, initialQuery }` to use the commander's header input. App components receive `query`, `setQuery`, and `setSearchTrailing` for adding a compact action beside the input.
 
 ### Search prefixes
 
