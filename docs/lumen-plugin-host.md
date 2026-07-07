@@ -251,7 +251,7 @@ host.commands.add({
 });
 ```
 
-App commands hide the search field by default. Set `commanderSearch: true` or pass `{ placeholder, initialQuery }` to use the commander's header input. App components receive `query`, `setQuery`, and `setSearchTrailing` for adding a compact action beside the input.
+App commands hide the search field by default. Set `commanderSearch: true` or pass `{ placeholder, initialQuery }` to use the commander's header input. App components receive `query`, `setQuery`, and `setSearchTrailing` for adding a compact action beside the input, plus `setBackHandler` when an internal sub-view should consume the header back button or `Escape` before the app exits.
 
 ### Search prefixes
 
@@ -815,5 +815,3 @@ if (host.window === "presenter") {
 ```
 
 Use `onunload` to clean up only what you created outside the host APIs.
-
-

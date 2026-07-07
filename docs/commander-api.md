@@ -61,7 +61,7 @@ What happens when the user selects this entry:
 
 Use `type: 'app'` for commands that open a screen inside the commander instead of closing it. The user sees a back arrow (`←`) in the header and can return to the main list.
 
-Your component always receives `{ onClose, onBack }` as props. If the command enables `commanderSearch`, it also receives the current search input value and helpers:
+Your component always receives `{ onClose, onBack }` as props. If the command enables `commanderSearch`, it also receives the current search input value and helpers, including an optional back override registration API:
 
 ```ts
 interface CommanderSearchAccessoryProps {
@@ -72,6 +72,8 @@ interface CommanderSearchAccessoryProps {
 }
 
 type CommanderSearchTrailingComponent = ComponentType<CommanderSearchAccessoryProps>;
+
+type CommanderBackHandler = () => boolean | undefined | Promise<boolean | undefined>;
 
 interface CommanderSearchOptions {
   placeholder?: string;
@@ -84,6 +86,7 @@ interface CommanderAppProps {
   query?: string;
   setQuery?: (query: string) => void;
   setSearchTrailing?: Dispatch<SetStateAction<CommanderSearchTrailingComponent | undefined>>;
+  setBackHandler?: Dispatch<SetStateAction<CommanderBackHandler | undefined>>;
 }
 ```
 
@@ -126,8 +129,30 @@ export default class SearchPlugin extends LumenPlugin {
 }
 ```
 
-`commanderSearch: true` enables the input with the app title as its placeholder. Passing an object lets you set `placeholder` and `initialQuery`. Use `setSearchTrailing` for compact actions that belong beside the input, such as settings, filters, or refresh. Clear it on unmount so the next app view starts clean.
+`commanderSearch: true` enables the input with the app title as its placeholder. Passing an object lets you set `placeholder` and `initialQuery`. Use `setSearchTrailing` for compact actions that belong beside the input, such as settings, filters, or refresh. Use `setBackHandler` when an internal sub-view should consume the header back button or `Escape` before the commander exits the app. Clear both on unmount so the next app view starts clean.
 
+### App back handling
+
+Apps can optionally override the commander back action without leaving the app. Register a `setBackHandler` callback that returns `true` when it handled the back action internally. If it returns `false`, `undefined`, or no handler is registered, the commander falls back to the default app exit behavior.
+
+```tsx
+function SearchScreen({ setBackHandler }: CommanderAppProps) {
+  const [view, setView] = React.useState<'search' | 'settings'>('search');
+
+  React.useEffect(() => {
+    if (!setBackHandler) return;
+
+    setBackHandler(() => {
+      if (view === 'settings') {
+        setView('search');
+        return true;
+      }
+    });
+
+    return () => setBackHandler(undefined);
+  }, [setBackHandler, view]);
+}
+```
 ### Example
 
 ```tsx
@@ -160,7 +185,7 @@ What happens when the user selects this entry:
 1. The commander stays open.
 2. The header shows the command `title` and a `←` back button.
 3. Your component renders in the body area.
-4. Calling `onBack()` returns to the main list; `onClose()` dismisses the palette entirely.
+4. Calling `onBack()` returns to the main list; `onClose()` dismisses the palette entirely. Registering `setBackHandler` lets your app consume those header/escape back gestures first when needed.
 
 ---
 

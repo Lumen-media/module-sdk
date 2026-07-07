@@ -68,6 +68,11 @@ export interface CommanderSearchAccessoryProps {
 export type CommanderSearchTrailingComponent =
 	ComponentType<CommanderSearchAccessoryProps>;
 
+export type CommanderBackHandler = () =>
+	| boolean
+	| undefined
+	| Promise<boolean | undefined>;
+
 export interface CommanderSearchOptions {
 	placeholder?: string;
 	initialQuery?: string;
@@ -81,6 +86,7 @@ export interface CommanderAppProps {
 	setSearchTrailing?: Dispatch<
 		SetStateAction<CommanderSearchTrailingComponent | undefined>
 	>;
+	setBackHandler?: Dispatch<SetStateAction<CommanderBackHandler | undefined>>;
 }
 
 export interface CommandSpec {
