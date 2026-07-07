@@ -129,7 +129,8 @@ export interface CommandsAPI {
 export interface NotifyOpts {
 	title?: string;
 	message: string;
-	level?: "info" | "warn" | "error";
+	level?: "info" | "warn" | "error" | "success" | "loading" | "custom";
+	[key: string]: unknown;
 }
 
 export interface ConfirmOpts {
