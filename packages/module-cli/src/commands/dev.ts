@@ -6,11 +6,19 @@ const DEV_SERVER = "http://127.0.0.1:5179";
 const CONFIG_FILES = ["vite.config.ts", "vite.config.js", "vite.config.mjs"];
 
 async function registerModule(path: string): Promise<string> {
-	const res = await fetch(`${DEV_SERVER}/modules`, {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ path, dev_mode: true }),
-	});
+	let res: Response;
+	try {
+		res = await fetch(`${DEV_SERVER}/modules`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ path, dev_mode: true }),
+		});
+	} catch {
+		throw new Error(
+			`Could not connect to Lumen dev server at ${DEV_SERVER}.\n` +
+				"Make sure Lumen is running with Developer Mode enabled (Settings > Advanced).",
+		);
+	}
 
 	if (!res.ok) {
 		const text = await res.text();
