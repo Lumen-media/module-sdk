@@ -35,7 +35,9 @@ async function main(): Promise<number> {
 		console.log("Next steps:");
 		console.log(`  cd ${name}`);
 		console.log("  pnpm install");
-		console.log("  pnpm build");
+		console.log(
+			"  pnpm dev    # hot-reload against a running Lumen (debug mode)",
+		);
 		return 0;
 	} catch (err) {
 		console.error((err as Error).message);

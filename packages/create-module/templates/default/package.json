@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "lumen-module dev",
     "build": "lumen-module build",
     "pack": "lumen-module build && lumen-module pack",
     "sync-manifest": "node scripts/sync-manifest.js",
