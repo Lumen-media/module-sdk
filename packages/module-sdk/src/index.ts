@@ -338,7 +338,25 @@ export interface I18nAPI {
 }
 
 export type LyricsHostAPI = Record<string, never>;
-export type LibraryHostAPI = Record<string, never>;
+
+export type MediaType = "audio" | "video" | "image";
+
+export interface MediaRef {
+	id: string;
+	path: string;
+	name: string;
+	type: MediaType;
+}
+
+export interface LibraryHostAPI {
+	addUrl?(input: {
+		type: "video";
+		url: string;
+		addToQueue?: boolean;
+		playNext?: boolean;
+		duration?: number;
+	}): Promise<MediaRef>;
+}
 
 export interface PlayerHostAPI {
 	nextSlide(): void;
@@ -382,6 +400,11 @@ export interface QueueHostAPI {
 	previous(): void;
 	goTo(index: number): void;
 	registerTrigger<T = unknown>(spec: QueueTriggerSpec<T>): Disposable;
+	addUrl?(input: {
+		url: string;
+		position?: "end" | "next";
+		duration?: number;
+	}): Promise<void>;
 }
 export interface FontsAPI {
 	list(): Promise<string[]>;
