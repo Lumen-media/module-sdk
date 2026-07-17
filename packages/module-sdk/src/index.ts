@@ -46,6 +46,13 @@ export type SlotName =
 	| "editor.lyrics.toolbar"
 	| "app.header.trailing";
 
+export interface PresenterControlsItemProps {
+  kind: 'lyrics' | 'image' | 'presentation' | null;
+  active: boolean;
+  slideIndex: number;
+  totalSlides: number;
+}
+
 export interface PanelSpec {
 	id: string;
 	slot: SlotName;

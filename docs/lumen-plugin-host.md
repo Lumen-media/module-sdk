@@ -212,8 +212,21 @@ Use `app.header.trailing` for small status chips, icons, or quick actions. Keep 
 
 Use `presenter.controls.item` to add custom content to the presenter controls bar thumbnail strip. The component is rendered below the existing slides (lyrics, image, presentation) when the presenter is active.
 
+The component receives these props typed as `PresenterControlsItemProps`:
+
+| Prop | Type | Description |
+|---|---|---|
+| `kind` | `'lyrics' \| 'image' \| 'presentation' \| null` | Current presenter content type |
+| `active` | `boolean` | Whether the presenter is active |
+| `slideIndex` | `number` | Current slide index |
+| `totalSlides` | `number` | Total slides |
+
 ```tsx
-function CountdownThumbnail() {
+import type { PresenterControlsItemProps } from "@lumen-media/module-sdk";
+
+function CountdownThumbnail({ kind, active }: PresenterControlsItemProps) {
+  if (!active) return null;
+
   return (
     <div className="flex h-full w-40 shrink-0 items-center justify-center rounded-lg border bg-muted/30 text-sm font-semibold text-foreground">
       ⏱ 5:00
