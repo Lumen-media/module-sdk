@@ -40,6 +40,7 @@ export type SlotName =
 	| "main.center"
 	| "dialog"
 	| "presenter.content"
+	| "presenter.controls.item"
 	| "settings.section"
 	| "command-palette.section"
 	| "editor.lyrics.toolbar"

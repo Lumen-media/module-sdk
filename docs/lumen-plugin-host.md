@@ -194,18 +194,40 @@ host.panels.add({
 Available slots:
 
 | Slot | Expected use |
-|---|---|
+|---|---|---|
 | `sidebar.left.tabs` | Left sidebar tabs. |
 | `sidebar.right.tabs` | Right sidebar tabs. |
 | `main.center` | Main center area. |
 | `dialog` | Dialog content opened by `host.ui.openDialog(id)`. |
 | `presenter.content` | Content for the presenter and overlay outputs. |
+| `presenter.controls.item` | Custom content rendered in the presenter controls bar thumbnail strip. |
 | `settings.section` | Settings section. |
 | `command-palette.section` | Section inside the command palette. |
 | `editor.lyrics.toolbar` | Lyrics editor toolbar. |
 | `app.header.trailing` | Compact operator-facing UI slot at the start of the header's right-side actions. |
 
 Use `app.header.trailing` for small status chips, icons, or quick actions. Keep the content compact: the shell wraps each module panel in a constrained container so it does not take over the app header.
+
+### Presenter controls slot
+
+Use `presenter.controls.item` to add custom content to the presenter controls bar thumbnail strip. The component is rendered below the existing slides (lyrics, image, presentation) when the presenter is active.
+
+```tsx
+function CountdownThumbnail() {
+  return (
+    <div className="flex h-full w-40 shrink-0 items-center justify-center rounded-lg border bg-muted/30 text-sm font-semibold text-foreground">
+      ⏱ 5:00
+    </div>
+  );
+}
+
+host.panels.add({
+  id: `${host.meta.id}.timer`,
+  slot: "presenter.controls.item",
+  component: CountdownThumbnail,
+  when: () => host.presentation.state() === "live",
+});
+```
 
 ## Commands with `host.commands`
 
