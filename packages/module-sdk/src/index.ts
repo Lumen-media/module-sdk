@@ -47,10 +47,10 @@ export type SlotName =
 	| "app.header.trailing";
 
 export interface PresenterControlsItemProps {
-  kind: 'lyrics' | 'image' | 'presentation' | null;
-  active: boolean;
-  slideIndex: number;
-  totalSlides: number;
+	kind: "lyrics" | "image" | "presentation" | null;
+	active: boolean;
+	slideIndex: number;
+	totalSlides: number;
 }
 
 export interface PanelSpec {
