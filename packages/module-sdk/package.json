@@ -1,6 +1,6 @@
 {
 	"name": "@lumen-media/module-sdk",
-	"version": "0.12.4",
+	"version": "0.12.5",
 	"description": "Public contract for building Lumen modules",
 	"type": "module",
 	"main": "./dist/index.js",
