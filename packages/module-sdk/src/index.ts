@@ -223,9 +223,15 @@ export interface JsonStore {
 	delete(key: string): Promise<void>;
 }
 
+export interface Migration {
+	version: number;
+	up: string;
+}
+
 export interface SqliteHandle {
 	exec(sql: string, params?: unknown[]): Promise<void>;
 	query<T = unknown>(sql: string, params?: unknown[]): Promise<T[]>;
+	migrate(versions: Migration[]): Promise<void>;
 }
 
 export interface DataAPI {
@@ -416,6 +422,18 @@ export interface QueueHostAPI {
 }
 export interface FontsAPI {
 	list(): Promise<string[]>;
+}
+
+export interface WindowConfig {
+	maximized?: boolean;
+	resizable?: boolean;
+	decorations?: boolean;
+	title?: string;
+	fullscreen?: boolean;
+	width?: number;
+	height?: number;
+	minWidth?: number;
+	minHeight?: number;
 }
 
 export interface PresentationHostAPI {
