@@ -97,7 +97,7 @@ The manifest describes the module to the CLI, the bundler and the host app.
 ```ts
 export interface LumenHost {
 	meta: { id: string; version: string };
-	window: "main" | "presenter";
+	window: "main" | "presenter" | "surface";
 	app: { version: string; locale: string };
 
 	panels: PanelsAPI;
@@ -116,6 +116,8 @@ export interface LumenHost {
 	library: LibraryHostAPI;
 	player: PlayerHostAPI;
 	presentation: PresentationHostAPI;
+	overlay: OverlayHostAPI;
+	surface: SurfaceHostAPI;
 	themes: ThemesHostAPI;
 	fonts: FontsAPI;
 
@@ -132,16 +134,21 @@ export interface LumenHost {
 |---|---|
 | `host.meta.id` | Id of the loaded module. |
 | `host.meta.version` | Version of the loaded module. |
-| `host.window` | Current window: `"main"` or `"presenter"`. |
+| `host.window` | Current window: `"main"`, `"presenter"` or `"surface"`. |
 | `host.app.version` | Lumen app version. |
 | `host.app.locale` | Current app locale. |
 
-Use `host.window` to separate main window UI from presenter UI.
+Use `host.window` to separate main window UI from presenter or surface window UI.
 
 ```ts
 async onload(host: LumenHost) {
 	if (host.window === "presenter") {
 		registerPresenter(host);
+		return;
+	}
+
+	if (host.window === "surface") {
+		registerSurface(host);
 		return;
 	}
 
@@ -164,6 +171,7 @@ async onload(host: LumenHost) {
 | `host.queue` | Read queue state, observe changes, navigate and register triggers. |
 | host.presentation | Project or clear a view in the presenter window. |
 | host.overlay | Project or clear a view in the dedicated overlay window. |
+| host.surface | Open or close a module-owned native operator-facing window. |
 | `host.themes` | Read current theme and observe changes. |
 | `host.fonts` | List available fonts. |
 | `host.fs` | Sandboxed file system access within the module's data directory. |

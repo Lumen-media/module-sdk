@@ -32,13 +32,14 @@ export interface ModuleManifest {
 	};
 }
 
-export type LumenWindow = "main" | "presenter";
+export type LumenWindow = "main" | "presenter" | "surface";
 
 export type SlotName =
 	| "sidebar.left.tabs"
 	| "sidebar.right.tabs"
 	| "main.center"
 	| "dialog"
+	| "surface.window"
 	| "presenter.content"
 	| "presenter.controls.item"
 	| "settings.section"
@@ -452,6 +453,26 @@ export interface OverlayHostAPI {
 	isWindowOpen(): boolean;
 }
 
+export interface SurfaceWindowOptions {
+	maximized?: boolean;
+	resizable?: boolean;
+	decorations?: boolean;
+	title?: string;
+	fullscreen?: boolean;
+	width?: number;
+	height?: number;
+	minWidth?: number;
+	minHeight?: number;
+}
+
+export interface SurfaceHostAPI {
+	state(): "idle" | "live";
+	onStateChange(handler: (state: "idle" | "live") => void): Disposable;
+	openWindow(panelId: string, props?: unknown, options?: SurfaceWindowOptions): void;
+	clear(): void;
+	isWindowOpen(): boolean;
+}
+
 export interface LumenHost {
 	meta: { id: string; version: string };
 	window: LumenWindow;
@@ -474,6 +495,7 @@ export interface LumenHost {
 	player: PlayerHostAPI;
 	presentation: PresentationHostAPI;
 	overlay: OverlayHostAPI;
+	surface: SurfaceHostAPI;
 	themes: ThemesHostAPI;
 	fonts: FontsAPI;
 

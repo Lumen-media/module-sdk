@@ -69,6 +69,13 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 			clear: noop,
 			isWindowOpen: () => false,
 		},
+		surface: {
+			state: () => "idle",
+			onStateChange: () => disposable,
+			openWindow: noop,
+			clear: noop,
+			isWindowOpen: () => false,
+		},
 		themes: {
 			current: () => "dark",
 			onChange: () => disposable,
