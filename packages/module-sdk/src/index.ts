@@ -415,6 +415,7 @@ export interface QueueHostAPI {
 	previous(): void;
 	goTo(index: number): void;
 	registerTrigger<T = unknown>(spec: QueueTriggerSpec<T>): Disposable;
+	addTrigger?(triggerId: string, config: unknown): void;
 	addUrl?(input: {
 		url: string;
 		position?: "end" | "next";
