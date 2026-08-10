@@ -101,9 +101,7 @@ describe("createMockHost", () => {
 		});
 
 		it("openBackgroundPicker does not throw", () => {
-			expect(() =>
-				host().ui.openBackgroundPicker(() => {}),
-			).not.toThrow();
+			expect(() => host().ui.openBackgroundPicker(() => {})).not.toThrow();
 		});
 
 		it("openMediaPicker does not throw", () => {
@@ -323,9 +321,7 @@ describe("createMockHost", () => {
 		it("get and post resolve to null", async () => {
 			const h = host();
 			await expect(h.net.get?.("https://example.com")).resolves.toBeNull();
-			await expect(
-				h.net.post?.("https://example.com", {}),
-			).resolves.toBeNull();
+			await expect(h.net.post?.("https://example.com", {})).resolves.toBeNull();
 		});
 	});
 
