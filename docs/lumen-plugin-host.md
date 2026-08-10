@@ -533,6 +533,8 @@ interface QueueItem {
 | `previous()` | Goes back to the previous item. |
 | `goTo(index)` | Jumps to the item at the given index (0-based). |
 | `registerTrigger(spec)` | Registers a queue trigger. Returns `Disposable`. |
+| `registerAction(spec)` | Registers a module-only queue action. Returns `Disposable`. |
+| `addTrigger(triggerId, config)` | Adds a trigger or action instance to the queue. |
 
 ### Queue triggers with `registerTrigger`
 
@@ -595,6 +597,45 @@ function TimerSummary({ value, onEdit }: { value: TimerConfig; onEdit: () => voi
   )
 }
 ```
+
+### Module-only actions with `registerAction`
+
+Actions are a lighter alternative to triggers. Unlike triggers, actions do **not** appear in the queue panel context menu — they are added programmatically via `addTrigger` from module code only. No operator-facing UI is needed.
+
+Use `registerAction` when the module controls what gets added and when, with pre-determined config. Use `registerTrigger` when the operator should pick and configure items through the queue panel.
+
+```ts
+host.queue.registerAction({
+  id: 'my-module.show-slide',
+  onFire(config) {
+    host.presentation.project('my-module-slide', { data: config })
+  },
+})
+
+// Later, from anywhere in the module:
+host.queue.addTrigger?.('my-module.show-slide', {
+  slideIndex: 3,
+  title: 'Announcements',
+})
+```
+
+#### When to use each
+
+| `registerAction` | `registerTrigger` |
+|---|---|
+| Module decides what and when | Operator decides what and when |
+| Config is pre-determined | Config is chosen via dialog |
+| No operator-facing UI | Full `ConfigComponent` + `SummaryComponent` |
+| Examples: verse bookmark, quick-slide, auto-generated items | Examples: countdown timer, custom announcement builder |
+
+#### `QueueActionSpec<T>`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | ✓ | Unique identifier (`module-id.name`) |
+| `onFire` | `(config: T) => void` | ✓ | Called when auto-advance reaches this action |
+
+Both triggers and actions share the same `addTrigger` entry point and the same auto-advance interception flow — the only difference is visibility in the queue panel.
 
 ## Presentation with `host.presentation`
 

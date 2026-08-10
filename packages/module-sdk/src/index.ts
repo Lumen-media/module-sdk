@@ -408,6 +408,11 @@ export interface QueueTriggerSpec<T = unknown> {
 	onFire(config: T): void;
 }
 
+export interface QueueActionSpec<T = unknown> {
+	id: string;
+	onFire(config: T): void;
+}
+
 export interface QueueHostAPI {
 	state(): QueueState;
 	onChange(handler: (state: QueueState) => void): Disposable;
@@ -415,6 +420,7 @@ export interface QueueHostAPI {
 	previous(): void;
 	goTo(index: number): void;
 	registerTrigger<T = unknown>(spec: QueueTriggerSpec<T>): Disposable;
+	registerAction<T = unknown>(spec: QueueActionSpec<T>): Disposable;
 	addTrigger?(triggerId: string, config: unknown): void;
 	addUrl?(input: {
 		url: string;

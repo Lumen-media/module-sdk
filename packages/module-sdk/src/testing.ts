@@ -49,6 +49,7 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 			previous: noop,
 			goTo: noop,
 			registerTrigger: () => disposable,
+			registerAction: () => disposable,
 		},
 		library: {},
 		player: {
