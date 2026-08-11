@@ -19,6 +19,23 @@ export default class MyPlugin extends LumenPlugin {
 	}
 
 	async onunload() {
+		host.log.info("unloaded");
+	}
+}
+```
+
+> **⚠️ Do not store host API objects in reactive state.** Host objects (`host.queue`, `host.presentation`, etc.) contain closures and internal references. Placing them inside Zustand, Redux, `useState`, or any observable store triggers unnecessary comparisons on every state update — degrading performance and potentially breaking serialization. Always store them in a plain module-level variable instead.
+>
+> ```ts
+> // ❌ Wrong — causes performance issues
+> useMyStore.getState().init({ queue: host.queue });
+>
+> // ✅ Right — module-level scoped variable, zero reactive overhead
+> let queue: QueueHostAPI | null = null;
+> queue = host.queue;
+> ```
+
+	async onunload() {
 		// Extra cleanup if you created your own timers, observers or connections.
 	}
 }
