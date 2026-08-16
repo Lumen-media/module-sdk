@@ -413,8 +413,13 @@ export interface ThemesHostAPI {
 	} | null;
 	onDefaultBackgroundChange(
 		handler: (
-			bg: { src: string; thumb?: string; type: "theme" | "image" | "video"; name: string } | null
-		) => void
+			bg: {
+				src: string;
+				thumb?: string;
+				type: "theme" | "image" | "video";
+				name: string;
+			} | null,
+		) => void,
 	): Disposable;
 }
 
