@@ -270,8 +270,8 @@ describe("createMockHost", () => {
 			expect(typeof host().themes.current()).toBe("string");
 		});
 
-		it("onChange returns a disposable", () => {
-			const d = host().themes.onChange(() => {});
+		it("onDefaultBackgroundChange returns a disposable", () => {
+			const d = host().themes.onDefaultBackgroundChange(() => {});
 			expect(typeof d.dispose).toBe("function");
 		});
 
