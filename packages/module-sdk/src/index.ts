@@ -378,14 +378,44 @@ export interface PlayerHostAPI {
 	play(itemId: string): void;
 }
 
+export interface ThemeRef {
+	id: string;
+	name: string;
+	colorMode: "dark" | "light";
+	accentId: string;
+}
+
+export type ThemeAddSource =
+	| { type: "url"; url: string }
+	| { type: "file"; path: string };
+
+export interface ThemeAddInput {
+	source: ThemeAddSource;
+	name?: string;
+}
+
+export interface ThemeAddResult {
+	id: number;
+	name: string;
+	path: string;
+	extension: string;
+}
+
 export interface ThemesHostAPI {
-	current(): string;
-	onChange(handler: (theme: string) => void): Disposable;
+	current(): ThemeRef;
+	list(): ThemeRef[];
+	apply(id: string): void;
+	addBackground(input: ThemeAddInput): Promise<ThemeAddResult>;
 	defaultBackground(): {
 		src: string;
 		type: "theme" | "image" | "video";
 		name: string;
 	} | null;
+	onDefaultBackgroundChange(
+		handler: (
+			bg: { src: string; thumb?: string; type: "theme" | "image" | "video"; name: string } | null
+		) => void
+	): Disposable;
 }
 
 export interface QueueItem {

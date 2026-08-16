@@ -189,7 +189,7 @@ async onload(host: LumenHost) {
 | host.presentation | Project or clear a view in the presenter window. |
 | host.overlay | Project or clear a view in the dedicated overlay window. |
 | host.surface | Open or close a module-owned native operator-facing window. |
-| `host.themes` | Read current theme and observe changes. |
+| `host.themes` | Read current theme/profile, list/apply themes, register background images, observe default background. |
 | `host.fonts` | List available fonts. |
 | `host.fs` | Sandboxed file system access within the module's data directory. |
 | `host.net` | Host-managed HTTP requests via Rust/Tauri with permission enforcement. |
@@ -728,14 +728,60 @@ host.overlay.clear();
 ## Themes with `host.themes`
 
 ```ts
+// Tema atual (perfil ativo)
 const currentTheme = host.themes.current();
+// { id: string; name: string; colorMode: 'dark' | 'light'; accentId: string }
 
-host.themes.onChange((theme) => {
-	host.log.info("theme changed", theme);
+// Listar todos os temas/perfis
+const themes = host.themes.list();
+
+// Aplicar um tema pelo id
+host.themes.apply(themeId);
+
+// Registrar uma nova imagem de fundo na biblioteca de temas do app
+// A imagem é salva em lumen/files/media/themes/ e aparece no seletor de fundo
+const bg = await host.themes.addBackground({
+  source: { type: 'url', url: 'https://example.com/background.jpg' },
+  name: 'Minha Background',
+});
+// { id: number; name: string; path: string; extension: '.jpg' }
+
+// Ou a partir de um arquivo dentro do sandbox do módulo
+const bg2 = await host.themes.addBackground({
+  source: { type: 'file', path: 'assets/background.png' },
+});
+
+// Background padrão do perfil ativo
+const defaultBg = host.themes.defaultBackground();
+// { src: string; type: 'theme' | 'image' | 'video'; name: string } | null
+
+// Observar mudanças do background padrão (retorna blob URL pronta pra uso)
+const dispose = host.themes.onDefaultBackgroundChange((bg) => {
+  if (!bg) return;
+  // bg.src é blob URL — usar direto em <img> ou CSS
 });
 ```
 
-The current theme contract is represented as a `string`.
+| Método | Retorno | Descrição |
+|---|---|---|
+| `current()` | `ThemeRef` | Tema/perfil ativo completo |
+| `list()` | `ThemeRef[]` | Todos os temas/perfis disponíveis |
+| `apply(id)` | `void` | Define o perfil ativo |
+| `addBackground(input)` | `Promise<ThemeAddResult>` | Registra imagem na biblioteca de temas (URL ou arquivo do módulo) |
+| `defaultBackground()` | `{src, type, name} \| null` | Background padrão do perfil atual |
+| `onDefaultBackgroundChange(handler)` | `Disposable` | Subscreve mudanças; entrega blob URL |
+
+**Tipos:**
+```ts
+type ThemeAddSource = { type: 'url'; url: string } | { type: 'file'; path: string };
+interface ThemeAddInput { source: ThemeAddSource; name?: string; }
+interface ThemeAddResult { id: number; name: string; path: string; extension: string; }
+interface ThemeRef { id: string; name: string; colorMode: 'dark' | 'light'; accentId: string; }
+```
+
+> **Nota sobre `source.type: 'file'`**: o caminho é resolvido dentro do diretório sandboxado do módulo (mesma regra do `host.fs`). Tentativas de path traversal são bloqueadas.
+>
+> **Nota sobre `source.type: 'url'`**: o host baixa a imagem respeitando `permissions.network` do manifest. Apenas HTTPS, hosts privados bloqueados, tamanho máx 50 MB, apenas tipos de imagem suportados (jpg, png, webp, gif, svg, bmp, avif).
 
 ## Fonts with `host.fonts`
 

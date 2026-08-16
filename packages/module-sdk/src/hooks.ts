@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import type { LumenHost, QueueState } from "./index.js";
+import type { LumenHost, QueueState, ThemeRef } from "./index.js";
 
 export const LumenHostContext = createContext<LumenHost | null>(null);
 
@@ -27,14 +27,12 @@ export function useBus<T = unknown>(
 	}, [host, topic]);
 }
 
-export function useTheme(): string {
+export function useTheme(): ThemeRef {
 	const host = useHost();
 	const [theme, setTheme] = useState(() => host.themes.current());
 
 	useEffect(() => {
 		setTheme(host.themes.current());
-		const d = host.themes.onChange(setTheme);
-		return () => d.dispose();
 	}, [host]);
 
 	return theme;

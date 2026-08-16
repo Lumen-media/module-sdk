@@ -78,9 +78,12 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 			isWindowOpen: () => false,
 		},
 		themes: {
-			current: () => "dark",
-			onChange: () => disposable,
+			current: () => ({ id: "default", name: "Default", colorMode: "dark" as const, accentId: "cyan" }),
+			list: () => [],
+			apply: noop,
+			addBackground: async () => ({ id: 0, name: "", path: "", extension: "" }),
 			defaultBackground: () => null,
+			onDefaultBackgroundChange: () => disposable,
 		},
 		fonts: {
 			list: () => Promise.resolve([]),
