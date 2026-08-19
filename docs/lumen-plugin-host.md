@@ -760,6 +760,13 @@ const dispose = host.themes.onDefaultBackgroundChange((bg) => {
   if (!bg) return;
   // bg.src é blob URL — usar direto em <img> ou CSS
 });
+
+// Observar mudanças do tema ativo (perfil trocado, cor/idioma alterado)
+const unsub = host.themes.onChange((theme) => {
+  // theme: { id, name, colorMode, accentId, accentHex, language }
+  applyMyColors(theme.colorMode, theme.accentHex);
+  if (theme.language) setMyTexts(theme.language);
+});
 ```
 
 | Método | Retorno | Descrição |
@@ -769,15 +776,25 @@ const dispose = host.themes.onDefaultBackgroundChange((bg) => {
 | `apply(id)` | `void` | Define o perfil ativo |
 | `addBackground(input)` | `Promise<ThemeAddResult>` | Registra imagem na biblioteca de temas (URL ou arquivo do módulo) |
 | `defaultBackground()` | `{src, type, name} \| null` | Background padrão do perfil atual |
-| `onDefaultBackgroundChange(handler)` | `Disposable` | Subscreve mudanças; entrega blob URL |
+| `onChange(handler)` | `Disposable` | Subscreve mudanças do tema ativo (perfil, cor ou idioma); dispara imediatamente com o valor atual |
+| `onDefaultBackgroundChange(handler)` | `Disposable` | Subscreve mudanças do background padrão; entrega blob URL |
 
 **Tipos:**
 ```ts
 type ThemeAddSource = { type: 'url'; url: string } | { type: 'file'; path: string };
 interface ThemeAddInput { source: ThemeAddSource; name?: string; }
 interface ThemeAddResult { id: number; name: string; path: string; extension: string; }
-interface ThemeRef { id: string; name: string; colorMode: 'dark' | 'light'; accentId: string; }
+interface ThemeRef {
+  id: string;
+  name: string;
+  colorMode: 'dark' | 'light';
+  accentId: string;
+  accentHex?: string; // cor do accent resolvida (ex.: '#fb7185')
+  language?: string;  // idioma do perfil ativo (ex.: 'pt-BR')
+}
 ```
+
+> **Multi-window**: o módulo pode rodar na janela principal, na janela de apresentação/overlay e nas janelas surface — cada uma é um contexto JS separado com seu próprio store. O Lumen sincroniza mudanças de perfil/idioma entre as janelas internamente (evento Tauri `profile:changed`), então `onChange` dispara de forma consistente em todas elas. O estado React local de cada janela não é compartilhado — só os dados via este evento.
 
 > **Nota sobre `source.type: 'file'`**: o caminho é resolvido dentro do diretório sandboxado do módulo (mesma regra do `host.fs`). Tentativas de path traversal são bloqueadas.
 >

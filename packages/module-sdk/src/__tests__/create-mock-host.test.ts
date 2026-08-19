@@ -266,8 +266,18 @@ describe("createMockHost", () => {
 	});
 
 	describe("themes", () => {
-		it("current returns a string", () => {
-			expect(typeof host().themes.current()).toBe("string");
+		it("current returns the active ThemeRef", () => {
+			expect(host().themes.current()).toMatchObject({
+				id: "default",
+				name: "Default",
+				colorMode: "dark",
+				accentId: "cyan",
+			});
+		});
+
+		it("onChange returns a disposable", () => {
+			const d = host().themes.onChange(() => {});
+			expect(typeof d.dispose).toBe("function");
 		});
 
 		it("onDefaultBackgroundChange returns a disposable", () => {

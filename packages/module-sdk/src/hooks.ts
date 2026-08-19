@@ -33,6 +33,8 @@ export function useTheme(): ThemeRef {
 
 	useEffect(() => {
 		setTheme(host.themes.current());
+		const d = host.themes.onChange(setTheme);
+		return () => d.dispose();
 	}, [host]);
 
 	return theme;
