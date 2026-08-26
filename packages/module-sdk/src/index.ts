@@ -486,6 +486,10 @@ export interface PresentationHostAPI {
 	state(): "idle" | "live";
 	onStateChange(handler: (state: "idle" | "live") => void): Disposable;
 	project(viewId: string, props?: unknown): void;
+	requestPresenterControls(): void;
+	controls: {
+		slides(components: ComponentType[]): void;
+	};
 	clear(): void;
 	isWindowOpen(): boolean;
 }

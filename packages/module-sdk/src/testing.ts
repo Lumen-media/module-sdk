@@ -60,6 +60,10 @@ export function createMockHost(overrides?: Partial<LumenHost>): LumenHost {
 			state: () => "idle",
 			onStateChange: () => disposable,
 			project: noop,
+			requestPresenterControls: noop,
+			controls: {
+				slides: noop,
+			},
 			clear: noop,
 			isWindowOpen: () => false,
 		},

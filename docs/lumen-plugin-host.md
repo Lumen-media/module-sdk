@@ -186,7 +186,7 @@ async onload(host: LumenHost) {
 | `host.data` | Persist JSON and use SQLite scoped to the module. |
 | `host.settings` | Load, save and observe module settings. |
 | `host.queue` | Read queue state, observe changes, navigate and register triggers. |
-| host.presentation | Project or clear a view in the presenter window. |
+| host.presentation | Project or clear a view in the presenter window. Request presenter controls. |
 | host.overlay | Project or clear a view in the dedicated overlay window. |
 | host.surface | Open or close a module-owned native operator-facing window. |
 | `host.themes` | Read current theme/profile, list/apply themes, register background images, observe default background. |
@@ -685,8 +685,27 @@ host.presentation.clear();
 | `state()` | Returns `"idle"` or `"live"`. |
 | `onStateChange(handler)` | Observes presentation state transitions. |
 | `project(viewId, props?)` | Projects a registered view. |
+| `requestPresenterControls()` | Shows the presenter controls bar (opt-in). |
+| `controls.slides(components)` | Sets custom slide components in the controls strip (16:9 aspect). |
 | `clear()` | Clears the current presentation. |
 | `isWindowOpen()` | Returns whether the presenter window is open. |
+
+### Presenter controls opt-in
+
+The presenter controls bar only appears when the module explicitly requests it. If a module projects content without calling `requestPresenterControls()`, the controls bar stays hidden.
+
+```ts
+// Show the presenter controls bar
+host.presentation.requestPresenterControls();
+
+// Set custom slide components rendered in the sequence strip (16:9 aspect ratio)
+host.presentation.controls.slides([
+  SlideComponentA,
+  SlideComponentB,
+]);
+```
+
+Each slide component is rendered inside a `16:9` aspect ratio container in the horizontal thumbnail strip. The controls bar is automatically hidden when the projection is cleared via `host.presentation.clear()`.
 
 
 ## Overlay with `host.overlay`

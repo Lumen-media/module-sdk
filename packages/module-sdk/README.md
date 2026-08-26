@@ -42,6 +42,8 @@ export default class MyPlugin extends LumenPlugin {
 | `host.ui.openDialog(id)` | Open a registered dialog panel |
 | `host.presentation.project(id, props)` | Project a `presenter.content` panel to the media window |
 | `host.presentation.clear()` | Hide the currently projected panel |
+| `host.presentation.requestPresenterControls()` | Show the presenter controls bar (opt-in) |
+| `host.presentation.controls.slides(components)` | Set custom slide components in the controls strip (16:9) |
 | `host.overlay.project(id, props)` | Project a `presenter.content` panel to the overlay window |
 | `host.overlay.clear()` | Close/clear the overlay window |
 | `host.data.json.get/set(key, value)` | Persist module data locally |
@@ -65,6 +67,23 @@ host.overlay.clear();
 ```
 
 `host.presentation` and `host.overlay` are independent outputs. Use `presentation` for the media/presenter window and `overlay` for a dedicated overlay window that can stay synchronized through module events, props, or host events.
+
+## Presenter controls
+
+The presenter controls bar only appears when the module explicitly requests it. If a module projects content without calling `requestPresenterControls()`, the controls bar stays hidden.
+
+```ts
+// Show the presenter controls bar
+host.presentation.requestPresenterControls();
+
+// Set custom slide components rendered in the sequence strip (16:9 aspect ratio)
+host.presentation.controls.slides([
+  SlideComponentA,
+  SlideComponentB,
+]);
+```
+
+Each slide component is rendered inside a `16:9` aspect ratio container in the horizontal thumbnail strip. The controls bar is automatically hidden when the projection is cleared via `host.presentation.clear()`.
 
 ## Header trailing slot
 
