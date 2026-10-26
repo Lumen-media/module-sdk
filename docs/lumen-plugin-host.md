@@ -587,6 +587,21 @@ host.queue.registerTrigger({
 
 Triggers only fire during auto-advance — they do **not** fire when the user manually double-clicks an item.
 
+#### Remote visibility and control
+
+Trigger instances also appear in the queue snapshot that Lumen publishes to
+paired remote-control clients (`queue_sync`) — no extra registration:
+
+- Each instance is an item with `kind: "trigger"` and a **string** `id`
+  (the instance id). Media items keep numeric ids.
+- `title` carries the spec `label`; `show_label` mirrors the per-instance label
+  toggle. Config and `SummaryComponent` content are **not** exposed, so make
+  `label` meaningful on its own. Actions (`registerAction`) have no `label`, so
+  their title falls back to the trigger id.
+- Remote clients can reorder or remove trigger instances, and firing one
+  (`queue_jump`) calls `onFire(config)` immediately and marks it played.
+- `queue_clear` removes both media items and trigger instances.
+
 #### `QueueTriggerSpec<T>`
 
 | Field | Type | Required | Description |
@@ -875,6 +890,11 @@ await host.fs.remove("temp/file.tmp");
 ## Network requests with `host.net`
 
 Host-managed HTTP requests backed by Lumen's Rust/Tauri runtime. Permission checks, timeouts, size limits, and redirect validation are enforced by the host — module code never makes raw network calls.
+
+> **Sockets:** `host.net` is HTTP-only — it does not support WebSocket or SSE
+> upgrades. Module code that needs a WebSocket should open a plain `WebSocket`
+> and close it in `onunload`; Lumen does not proxy or expose its remote-control
+> socket (`ws://<host>:8080`) to modules. Use `host.bus` for cross-window events.
 
 The primary API is `request()`. Convenience helpers `get()` and `post()` are thin wrappers that throw on non-2xx and return `response.data` directly.
 
