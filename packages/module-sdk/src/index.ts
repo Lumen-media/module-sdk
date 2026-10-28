@@ -345,18 +345,31 @@ export interface FsAPI {
 	remove(path: string): Promise<void>;
 }
 
-// ── I18nAPI ──────────────────────────────────────────────────────────
-
+// ── I18nAPI ──────────────────────────────────────────────────────────export interface I18nAPI {
 export interface I18nAPI {
 	t(key: string, params?: Record<string, string>): string;
 	locale(): string;
 }
+/**
+ * Lyrics library reads and transport control.
 
+ *
+ * Reserved in the current SDK contract — use {@link LumenHost.lyrics} only for
+ * future API evolution.
+ */
 export type LyricsHostAPI = Record<string, never>;
 
+/**
+ * One media kind the library indexes.
+ */
 export type MediaType = "audio" | "video" | "image";
 
+
+/**
+ * Lightweight library entry.
+ */
 export interface MediaRef {
+
 	id: string;
 	path: string;
 	name: string;
