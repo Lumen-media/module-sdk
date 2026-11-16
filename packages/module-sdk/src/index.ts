@@ -155,9 +155,20 @@ export interface PromptOpts {
 }
 
 export interface SelectedBackground {
-	type: "theme" | "image" | "video";
+	type: "theme" | "image" | "video" | "generator";
 	src: string;
 	name: string;
+	/** Rendered frame for generators; modules cannot compile the shaders. */
+	thumb?: string;
+}
+
+/** Options for {@link UIAPI.openBackgroundPicker}. */
+export interface BackgroundPickerOptions {
+	/**
+	 * Preview generated backgrounds as a live animation while the picker is
+	 * open. Defaults to `true`; set `false` on low-power surfaces.
+	 */
+	animated?: boolean;
 }
 
 export interface LibraryItem {
@@ -173,7 +184,10 @@ export interface UIAPI {
 	prompt(opts: PromptOpts): Promise<string | null>;
 	openCommandPalette(prefilter?: string): void;
 	openDialog(panelId: string): void;
-	openBackgroundPicker(onSelect: (bg: SelectedBackground) => void): void;
+	openBackgroundPicker(
+		onSelect: (bg: SelectedBackground) => void,
+		options?: BackgroundPickerOptions,
+	): void;
 	openMediaPicker(onSelect: (item: LibraryItem) => void): void;
 }
 
@@ -423,8 +437,9 @@ export interface ThemesHostAPI {
 	addBackground(input: ThemeAddInput): Promise<ThemeAddResult>;
 	defaultBackground(): {
 		src: string;
-		type: "theme" | "image" | "video";
+		type: "theme" | "image" | "video" | "generator";
 		name: string;
+		thumb?: string;
 	} | null;
 	onChange(handler: (theme: ThemeRef) => void): Disposable;
 	onDefaultBackgroundChange(
@@ -432,7 +447,7 @@ export interface ThemesHostAPI {
 			bg: {
 				src: string;
 				thumb?: string;
-				type: "theme" | "image" | "video";
+				type: "theme" | "image" | "video" | "generator";
 				name: string;
 			} | null,
 		) => void,

@@ -409,11 +409,18 @@ const name = await host.ui.prompt({
 host.ui.openCommandPalette("note ");
 host.ui.openDialog(`${host.meta.id}.dialog`);
 
-// Opens the background picker (theme, image or video)
-host.ui.openBackgroundPicker((background) => {
-	// background: { type: "theme" | "image" | "video", src: string, name: string }
-	host.log.info("selected background", background);
-});
+// Opens the background picker (theme, image, video or generated)
+host.ui.openBackgroundPicker(
+	(background) => {
+		// background: { type: "theme" | "image" | "video" | "generator", src, name, thumb? }
+		// Generated backgrounds carry a `lumen-bg://` URI in `src`; never load it
+		// as an image, render it with <BackgroundSurface> instead.
+		host.log.info("selected background", background);
+	},
+	// Previews generated backgrounds animated while the picker is open.
+	// Defaults to true.
+	{ animated: true },
+);
 
 // Opens the media library picker
 host.ui.openMediaPicker((item) => {
@@ -432,6 +439,38 @@ interface LibraryItem {
 	thumbnail?: string;
 }
 ```
+
+## Rendering backgrounds
+
+Never put a background `src` straight into an `<img>`: a generated background is
+a `lumen-bg://generator/...` URI that only the host can draw. `BackgroundSurface`
+from `@lumen-media/module-sdk/ui` renders every background type the way the host
+does — media from disk, generated effects animated on a shader surface, and a
+cached frame when you ask for one.
+
+```tsx
+import { BackgroundSurface } from "@lumen-media/module-sdk/ui";
+
+export function Slide({ background }: { background: SelectedBackground | null }) {
+	return (
+		<div className="relative h-64 w-full overflow-hidden">
+			<BackgroundSurface background={background} />
+			<div className="relative z-10">Text over the background</div>
+		</div>
+	);
+}
+```
+
+| Prop | Default | Meaning |
+| --- | --- | --- |
+| `background` | — | `lumen-bg://` URI, media path/URL, or a `SelectedBackground` |
+| `variant` | `"fill"` | `"thumbnail"` uses one cached generator frame and small media variants |
+| `animated` | `true` | `false` freezes generated backgrounds on a cached frame |
+| `className` | — | Applied to the media element; the surface fills its parent |
+
+The surface is absolutely positioned, so it needs a positioned parent. It renders
+nothing when `background` is empty, and it leaves URL building to the host: pass
+paths and URLs exactly as the APIs returned them.
 
 ## Communication with `host.bus` and `host.events`
 
@@ -787,7 +826,9 @@ const bg2 = await host.themes.addBackground({
 
 // Background padrão do perfil ativo
 const defaultBg = host.themes.defaultBackground();
-// { src: string; type: 'theme' | 'image' | 'video'; name: string } | null
+// { src: string; type: 'theme' | 'image' | 'video' | 'generator'; name: string; thumb?: string } | null
+// Em geradores, `thumb` é um frame estático em cache (bom para thumbnail);
+// para o fundo ao vivo use <BackgroundSurface background={defaultBg} />
 
 // Observar mudanças do background padrão (retorna blob URL pronta pra uso)
 const dispose = host.themes.onDefaultBackgroundChange((bg) => {
@@ -809,7 +850,7 @@ const unsub = host.themes.onChange((theme) => {
 | `list()` | `ThemeRef[]` | Todos os temas/perfis disponíveis |
 | `apply(id)` | `void` | Define o perfil ativo |
 | `addBackground(input)` | `Promise<ThemeAddResult>` | Registra imagem na biblioteca de temas (URL ou arquivo do módulo) |
-| `defaultBackground()` | `{src, type, name} \| null` | Background padrão do perfil atual |
+| `defaultBackground()` | `{src, type, name, thumb?} \| null` | Background padrão do perfil atual |
 | `onChange(handler)` | `Disposable` | Subscreve mudanças do tema ativo (perfil, cor ou idioma); dispara imediatamente com o valor atual |
 | `onDefaultBackgroundChange(handler)` | `Disposable` | Subscreve mudanças do background padrão; entrega blob URL |
 

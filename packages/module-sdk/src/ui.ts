@@ -1,4 +1,5 @@
 import type React from "react";
+import type { SelectedBackground } from "./index";
 
 // This module is type-only. At runtime inside Lumen, the host's import map
 // redirects @lumen-media/ui to /__lumen/ui.js which serves the real components.
@@ -702,3 +703,30 @@ export const TextEditor = _stub as React.ForwardRefExoticComponent<
 	Toolbar: AnyComp<TextEditorToolbarProps>;
 	BubbleMenu: AnyComp<TextEditorBubbleMenuProps>;
 };
+
+// ─── Backgrounds ────────────────────────────────────────────────────────────
+
+/** A stored background, a media path/URL or a background ref. */
+export type BackgroundValue = string | SelectedBackground | null | undefined;
+
+export interface BackgroundSurfaceProps {
+	/** Background to draw: `lumen-bg://` URI, media path/URL or a background ref. */
+	background: BackgroundValue;
+	/**
+	 * `fill` (default) covers the surface and animates generators.
+	 * `thumbnail` keeps generated backgrounds on one cached frame and asks for
+	 * small media variants, for lists and previews.
+	 */
+	variant?: "fill" | "thumbnail";
+	/** Set `false` to draw a single cached frame instead of animating a generator. */
+	animated?: boolean;
+	/** Applied to the media element; layout classes go on the wrapper. */
+	className?: string;
+}
+
+/**
+ * Renders any stored background the way Lumen does: media from disk, generated
+ * effects on a live shader surface (or one cached frame), and nothing when
+ * there is no background. Fills its parent, so put it in a positioned box.
+ */
+export const BackgroundSurface = _stub as AnyComp<BackgroundSurfaceProps>;
